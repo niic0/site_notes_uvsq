@@ -1297,3 +1297,7 @@ footer {
     color: white;
     background: #999;
 }
+
+.arrow-up:link {
+    transform: rotateX(180deg);
+}
