@@ -1,0 +1,796 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>Comparaison et alignement de séquences</title><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; --title-bar-height:20px; }
+.mac-os-11 { --title-bar-height:28px; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; tab-size: 4; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+  .CodeMirror-sizer { margin-left: 0px !important; }
+  .CodeMirror-gutters { display: none !important; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
+tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror-linenumber { user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-diagram-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li blockquote { margin: 1rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  .typora-export #write { break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+.MathJax_ref { fill: currentcolor; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.8; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.md-inline-math .MathJax_SVG .noError { display: none !important; }
+.html-for-mac .inline-math-svg .MathJax_SVG { vertical-align: 0.2px; }
+.md-math-block .MathJax_SVG_Display { text-align: center; margin: 0px; position: relative; text-indent: 0px; max-width: none; max-height: none; min-height: 0px; min-width: 100%; width: auto; overflow-y: hidden; display: block !important; }
+.MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
+.MathJax_SVG .MJX-monospace { font-family: var(--monospace); }
+.MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
+.MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; zoom: 90%; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; overflow-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; }
+.MathJax_SVG * { transition: none 0s ease 0s; }
+.MathJax_SVG_Display svg { vertical-align: middle !important; margin-bottom: 0px !important; margin-top: 0px !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+mark .md-meta { color: rgb(0, 0, 0); opacity: 0.3 !important; }
+@media print {
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+.md-diagram-panel .messageText { stroke: none !important; }
+.md-diagram-panel .start-state { fill: var(--node-fill); }
+.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
+.md-require-zoom-fix foreignobject { font-size: var(--mermaid-font-zoom); }
+
+
+
+
+.cm-s-inner .cm-variable {
+  color: #fff;
+}
+
+.cm-s-inner .cm-keyword,
+.cm-s-inner .cm-property {
+  color: #6699CC;
+}
+
+.cm-s-inner .cm-tag {
+  color: #EC5F67;
+}
+
+.CodeMirror div.CodeMirror-cursor {
+  border-left: 1px solid #b8bfc6;
+  z-index: 3;
+}
+
+.cm-s-inner .cm-string {
+  color: #99C794;
+}
+
+.cm-s-inner .cm-comment,
+.cm-s-inner.cm-comment {
+  color: #65737E;
+}
+
+.cm-s-inner .cm-header,
+.cm-s-inner .cm-def,
+.cm-s-inner.cm-header,
+.cm-s-inner.cm-def,
+.cm-s-inner .cm-attribute,
+.cm-s-inner .cm-operator {
+  color: #C594C5;
+}
+
+.cm-s-inner .cm-quote,
+.cm-s-inner.cm-quote {
+  color: #99C794;
+}
+
+.cm-s-inner .cm-hr {
+  color: #d8d5d5;
+}
+
+.cm-s-inner .cm-link {
+  color: #d3d3ef;
+}
+
+.cm-s-inner .cm-negative {
+  color: #EC5F67;
+}
+
+.cm-s-inner .cm-positive {
+  color: #99C794;
+}
+
+.cm-s-inner .cm-string-2 {
+  color: #EC5F67;
+}
+
+.cm-s-inner .cm-meta,
+.cm-s-inner .cm-qualifier {
+  color: #b7b3b3;
+}
+
+.cm-s-inner .cm-builtin {
+  color: #f3b3f8;
+}
+
+.cm-s-inner .cm-bracket {
+  color: #5FB3B3;
+}
+
+.cm-s-inner .cm-atom,
+.cm-s-inner.cm-atom {
+  color: #84B6CB;
+}
+
+.cm-s-inner .cm-number {
+  color: #F99157;
+}
+
+.cm-s-inner .cm-variable {
+  color: #b8bfc6;
+}
+
+.cm-s-inner .cm-variable-2 {
+  color: #9FBAD5;
+}
+
+.cm-s-inner .cm-variable-3 {
+  color: #1cc685;
+}
+
+.CodeMirror-selectedtext,
+.CodeMirror-selected {
+  background: #4a89dc;
+  color: #fff !important;
+  text-shadow: none;
+}
+
+.CodeMirror-gutters {
+  border-right: none;
+}@import '';
+
+:root {
+  --primary-color: #fcba03;
+  --primary-color-rgb: 252, 186, 3;
+
+  --bg-color: #292929;
+  --bg-color-dark: #1f1f1f;
+  --dark-trait: #141414;
+  --light-trait-100: #3d3d3d;
+  --light-trait-200: #545454;
+  --light-trait-300: #777;
+  --light-trait-400: #8c8c8c;
+
+  --mermaid-theme:dark;
+  
+  --text-color: #f8f8f2;
+  --text-color-secondary: #d2d3d3;
+  --text-highlight-color: #fff;
+  --text-highlight-bg: rgba(var(--primary-color-rgb), 0.3);
+  --select-text-bg-color: rgba(255, 255, 255, 0.2);
+  --search-select-text-color: var(--text-highlight-color);
+  --search-select-bg-color: var(--text-highlight-bg);
+
+  --code-color: #f3b3f8;
+
+  --border-radius: 3px;
+
+  --font-size: 15px;
+  --font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
+  --monospace: 'Fira Mono', 'Cousine', 'Consolas', monospace;
+
+  --heading-char-color: var(--light-trait-400);
+  --color-popover-bg-color: var(--text-color);
+  --rawblock-edit-panel-bd: var(--bg-color-dark);
+  --control-text-color: var(--text-color);
+  --meta-content-color: var(--primary-color);
+  --primary-btn-border-color: var(--primary-color);
+  --side-bar-bg-color: var(--bg-color-dark);
+  --item-hover-bg-color: var(--bg-color);
+  --active-file-bg-color: var(--bg-color);
+  --active-file-border-color: var(--bg-color);
+  --window-border: 1px solid var(--bg-color);
+  --focus-ring-color: transparent;
+}
+
+html {
+  font-size: var(--font-size);
+}
+
+body {
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+#write {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 30px;
+  padding-bottom: 100px;
+}
+
+@media only screen and (min-width: 1400px) {
+  #write {
+    max-width: 1024px;
+  }
+}
+
+@media only screen and (min-width: 1800px) {
+  #write {
+    max-width: 1200px;
+  }
+}
+
+#write > ul:first-child,
+#write > ol:first-child {
+  margin-top: 30px;
+}
+
+a {
+  color: var(--primary-color);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  position: relative;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  line-height: 1.4;
+  cursor: text;
+}
+
+h1:hover a.anchor,
+h2:hover a.anchor,
+h3:hover a.anchor,
+h4:hover a.anchor,
+h5:hover a.anchor,
+h6:hover a.anchor {
+  text-decoration: none;
+}
+
+h1 tt,
+h1 code,
+h2 tt,
+h2 code,
+h3 tt,
+h3 code,
+h4 tt,
+h4 code,
+h5 tt,
+h5 code,
+h6 tt,
+h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  padding-bottom: 0.3em;
+  font-size: 2.2em;
+  line-height: 1.3;
+  border-bottom: 1px solid var(--light-trait-100);
+}
+
+h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.75em;
+  line-height: 1.225;
+  border-bottom: 1px solid var(--light-trait-100);
+}
+
+h3 {
+  font-size: 1.4em;
+  line-height: 1.43;
+}
+
+h4 {
+  font-size: 1.2em;
+}
+
+h5 {
+  font-size: 1em;
+}
+
+h6 {
+  font-size: 1em;
+  color: var(--light-trait-300);
+}
+
+p,
+blockquote,
+ul,
+ol,
+dl,
+table {
+  margin: 0.8em 0;
+}
+
+li > ol,
+li > ul {
+  margin: 0 0;
+}
+
+hr {
+  height: 2px;
+  padding: 0;
+  margin: 16px 0;
+  background-color: var(--light-trait-100);
+  border: 0 none;
+  overflow: hidden;
+  box-sizing: content-box;
+}
+
+sup.md-footnote {
+  background-color: var(--light-trait-400);
+  color: var(--light-trait-100);
+}
+
+li p.first {
+  display: inline-block;
+}
+
+ul,
+ol {
+  padding-left: 30px;
+}
+
+ul:first-child,
+ol:first-child {
+  margin-top: 0;
+}
+
+ul:last-child,
+ol:last-child {
+  margin-bottom: 0;
+}
+
+mark,
+.ty-file-search-match-text,
+.md-search-hit {
+  background: var(--search-select-bg-color);
+  color: var(--search-select-text-color);
+}
+.md-search-hit * {
+  color: var(--search-select-text-color);
+}
+.cm-search-hit.CodeMirror-selectedtext,
+.md-search-hit.md-search-select,
+.md-search-select {
+  outline: 2px solid var(--primary-color);
+}
+.outline-item.select, .ty-search-item-line.select, .ty-search-item.select {
+  outline-width: 2px;
+}
+.outline-item.select {
+  outline-offset: 0px;
+}
+
+blockquote {
+  margin-left: -14px;
+  margin-right: -14px;
+  border-radius: var(--border-radius);
+  border-left: 4px solid var(--light-trait-300);
+  background-color: var(--light-trait-100);
+  padding: 7px 14px 7px 10px;
+}
+
+blockquote blockquote {
+  padding-right: 0;
+}
+
+table {
+  padding: 0;
+  word-break: initial;
+}
+
+table tr {
+  border-top: 1px solid var(--dark-trait);
+  margin: 0;
+  padding: 0;
+}
+
+table tr:nth-child(2n),
+thead {
+  background-color: var(--side-bar-bg-color);
+}
+
+table tr th {
+  font-weight: bold;
+  border: 1px solid var(--dark-trait);
+  border-bottom: 0;
+  margin: 0;
+  padding: 6px 13px;
+}
+
+table tr td {
+  border: 1px solid var(--dark-trait);
+  margin: 0;
+  padding: 6px 13px;
+}
+
+table tr th:first-child,
+table tr td:first-child {
+  margin-top: 0;
+}
+
+table tr th:last-child,
+table tr td:last-child {
+  margin-bottom: 0;
+}
+
+kbd {
+  font-size: 0.875rem;
+  background: var(--bg-color-dark);
+  border: 1px solid var(--dark-trait);
+  box-shadow: 0 2px 0 var(--dark-trait);
+  color: var(--text-color-secondary);
+}
+
+.md-fences,
+code,
+tt {
+  border: 1px solid var(--dark-trait);
+  background-color: var(--bg-color-dark);
+  border-radius: var(--border-radius);
+  padding: 2px 4px 0px 4px;
+  font-size: 0.9em;
+  font-family: var(--monospace);
+}
+
+.md-fences {
+  margin-bottom: 15px;
+  margin-top: 15px;
+  padding-top: 8px;
+  padding-bottom: 6px;
+  background-color: var(--side-bar-bg-color);
+}
+
+#write pre.md-meta-block {
+  padding: 1rem;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: var(--bg-color-dark);
+  border: 0;
+  border-radius: var(--border-radius);
+  color: var(--light-trait-400);
+  margin-top: 0 !important;
+}
+
+#write .mathjax-block .md-rawblock-tooltip {
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
+}
+
+#write .mathjax-block .md-math-container {
+  border-top-left-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+  border-bottom-left-radius: var(--border-radius);
+}
+
+#write .md-mathblock-panel .md-rawblock-control:first-of-type {
+  border-top-left-radius: var(--border-radius);
+}
+
+.md-mathjax-midline {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.md-inline-math script {
+  color: var(--code-color);
+}
+
+code {
+  padding: 0 2px 0 2px;
+}
+
+.CodeMirror-lines {
+  padding-left: 4px;
+}
+
+.code-tooltip {
+  box-shadow: none;
+  border-radius: var(--border-radius);
+}
+
+#write .code-tooltip {
+  bottom: initial;
+  top: 100%;
+  left: initial;
+  right: -1px;
+  background: var(--bg-color-dark);
+  border: 1px solid var(--dark-trait);
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-top: 0;
+  font-family: var(--monospace);
+}
+
+#write .md-mathblock-panel .code-tooltip {
+  right: 0;
+  border: none;
+}
+
+#write .md-task-list-item > input {
+  -webkit-appearance: initial;
+  display: block;
+  position: absolute;
+  border: 1px solid var(--light-trait-200);
+  border-radius: 50%;
+  margin-left: -1.8rem;
+  height: 1.2rem;
+  width: 1.2rem;
+  transition: background 0.3s;
+}
+
+#write .md-task-list-item > input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+#write .md-task-list-item > input[checked] {
+  background: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+
+#write .md-task-list-item > input[checked]::before {
+  content: '✓';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  color: var(--dark-trait);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.md-image > .md-meta {
+  border-radius: var(--border-radius);
+  padding: 2px 0px 0px 4px;
+  font-size: 0.9em;
+  color: inherit;
+}
+
+.md-toc {
+  margin-top: 20px;
+  padding-bottom: 20px;
+}
+
+/* Source mode */
+.CodeMirror.cm-s-typora-default *,
+.cm-s-typora-default * {
+  background: inherit;
+  color: var(--text-color);
+  font-family: var(--monospace);
+  font-size: var(--font-size) !important;
+  font-style: normal;
+  font-weight: normal;
+}
+.CodeMirror.cm-s-typora-default div.CodeMirror-cursor {
+  border-left: 2px solid var(--light-trait-400);
+}
+
+.sidebar-tabs {
+  border-bottom: none;
+}
+
+.outline-expander {
+  width: 1.5rem;
+  vertical-align: initial;
+}
+.outline-expander:before,
+.outline-expander:hover:before,
+.outline-item-open > .outline-item > .outline-expander:before,
+.outline-item-open > .outline-item > .outline-expander:hover:before {
+  content: "\f125";
+  transition: transform 125ms ease-in-out;
+}
+.outline-item-open > .outline-item > .outline-expander:hover:before,
+.outline-item-open > .outline-item > .outline-expander:before {
+  transform: rotate(90deg);
+}
+.outline-label:hover {
+  text-decoration: none;
+}
+
+#toc-dropmenu {
+  background: var(--bg-color-dark);
+}
+#toc-dropmenu .outline-title {
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+.dropdown-menu .divider {
+  display: none;
+}
+
+.context-menu {
+  background-color: var(--bg-color-dark);
+}
+
+.file-node-background {
+  height: 31px;
+}
+.file-node-content:hover .file-node-icon,
+.file-node-content:hover .file-node-open-state {
+  visibility: visible;
+}
+.file-node-icon {
+  margin-right: 8px;
+}
+.file-library-node:not(.file-node-root):focus>.file-node-content {
+  outline: none;
+}
+
+/* New file animation */
+.blink-area {
+  animation: none;
+}
+
+.file-list-item-summary {
+  font-size: var(--font-size);
+  font-family: var(--font-family);
+}
+
+#md-searchpanel input {
+  border-radius: var(--border-radius);
+  box-shadow: none;
+}
+#md-searchpanel input:focus {
+  box-shadow: none;
+  border-color: var(--meta-content-color);
+}
+#md-searchpanel .search-type-selection {
+  width: auto;
+}
+#md-searchpanel .btn:not(.close-btn):hover {
+  box-shadow: none;
+}
+
+.mac-seamless-mode #typora-sidebar {
+  background-color: var(--side-bar-bg-color);
+}
+
+#md-notification .btn {
+  border: 0;
+}
+
+
+
+</style>
+</head>
+<body class='typora-export'>
+<div id='write'  class=''><h1><a name="comparaison-et-alignement-de-séquences" class="md-header-anchor"></a><span>Comparaison et alignement de séquences</span></h1><h2><a name="introduction" class="md-header-anchor"></a><span>Introduction</span></h2><p><em><span>Exposition du problème</span></em></p><ul><li><strong><span>Le fait</span></strong><span>: Je viens de séquencer un génome et d&#39;identifier ses ORF (Open Reading Frame) et &quot;CDS&quot; (gènes potentiels)</span></li><li><strong><span>La question</span></strong><span>: existe-t-il des gènes </span><strong><span>annotés</span></strong><span> et </span><strong><span>stockés</span></strong><span> dans la Banque qui ressemblent (entièrement ou en partir) à &quot;mes&quot; CDS</span></li><li><strong><span>Hypothèse</span></strong><span>: Les gènes qui se ressemblent partagent des &quot;propriétés communes&quot; (fonctions proches). On espère alors que les banques donneront des indications sur les gènes.</span></li></ul><h2><a name="pourquoi-les-gènes-de-différents-organismes-se-ressembleraient-ils-" class="md-header-anchor"></a><span>Pourquoi les gènes de différents organismes se ressembleraient-ils ?</span></h2><h3><a name="homologie" class="md-header-anchor"></a><span>Homologie</span></h3><p><span>Les espèces partagent toujours un ancêtre commun (Le plus ancien étant </span><em><span>LUCA</span></em><span>), ce sont des &#39;proches parents&#39;. Les espèces ont donc des gènes en commun. Ils sont transmis à la descendance lors des spéciations (gènes et orthologues) et se dupliquent au sein d&#39;un même génome (gène para-logues).</span></p><p><strong><span>Les orthologues et les para-logues</span></strong><span> sont des gènes apparentés (ils dérivent d&#39;un ancêtre commun). Des gènes apparentés sont dits </span><strong><span>homologues</span></strong><span>.</span></p><h3><a name="convergence-évolutive" class="md-header-anchor"></a><span>Convergence évolutive</span></h3><p><span>Avec des gènes différents, on obtient phénotypiquement les même choses. On peut prendre l&#39;exemple des taupes (vertébré) et des Grillon-taupes (invertébré) qui ont des pâtes quasi identiques. Des gènes non apparentés finissent par se ressembler du fait  d&#39;une &quot;convergence évolutive&quot;. Même si elle est avérée, la convergence est un phénomène considéré comme rare. On suppose donc avant la convergence, que si ressemblance il y a, elles dérivent d&#39;un ancêtre commun.</span></p><h3><a name="transfert-horizontale" class="md-header-anchor"></a><span>Transfert horizontale</span></h3><p><span>Il existe 3 modes de transferts : </span></p><ul><li><strong><span>Conjugaison</span></strong><span> : Le &quot;sexe&quot; chez les bactéries ou elles échangent des plasmides qui héberge des gènes. </span></li><li><strong><span>Transformation</span></strong><span> : Capacité des bactéries à prendre dans le milieu des bactéries. Quand une bactéries meurt, son cytoplasme explose et d&#39;autres bactéries viennent le prendre. </span></li><li><strong><span>Transduction</span></strong><span> : Transfert de gène via les phages.</span></li></ul><hr /><p><span>Ces 3 raisons permettent de confirmer qu&#39;il est très probable que le gène étudié soit ressemblant à une ou plusieurs espèces déjà enregistrées.</span></p><hr /><h2><a name="comment-comparer-deux-gènes-" class="md-header-anchor"></a><span>Comment comparer deux gènes ?</span></h2><p><span>On va partir du principe qu&#39;un gène d&#39;une autre espèce ressemble à peu près à notre séquence. On va chercher à comparer plus scientifiquement ces deux gènes. Pour ça, l&#39;une des manières de faire est d&#39;utiliser le </span><strong><span>Dot-Plot</span></strong><span>.</span></p><h3><a name="le-dot-plot" class="md-header-anchor"></a><span>Le Dot-Plot</span></h3><p><span>On a par exemple deux séquences à comparer : { </span><code>ACTCGAGCTATCG</code><span> } et { </span><code>ACTATGAGATATG</code><span> }. Ici il est simple de comparer ces deux séquences &quot;à l’œil&quot;, mais avec une séquence avec plus de 50 nucléotides, il devient très difficile de faire ça à l’œil.</span></p><p><img src="data:image/png;base64,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" referrerpolicy="no-referrer" alt="dot-plot"></p><p><span>Le Dot-Plot est indexé par les caractères des deux séquences. Les ressemblances locales apparaissent le long des segments diagonaux. C&#39;est une méthode simple et rapide pour comparer des chaîne de nucléotides courte mais encore une fois, quand on a des protéines qui font plus de 200 nucléotides, on ne peux utiliser le Dot-Plot. Cette méthode ne fonctionne pas pour faire du &quot;massif&quot;.</span></p><h3><a name="alignement-de-deux-séquences" class="md-header-anchor"></a><span>Alignement de deux séquences</span></h3><p><span>L&#39;alignement de séquences correspond à la mise en correspondance de deux séquences (ADN ou protéines) pour faire apparaître les similarités (les segments communs). L&#39;idée est d&#39;aligner les séquences en les justifiant à gauche de manière à faire apparaître les similarités et les différences des séquences.</span></p><p><img src="https://interstices.info/wp-content/uploads/jalios/alignement/Figb2.gif" referrerpolicy="no-referrer" alt="Alignemnt séquence"></p><p><span>3 évènement sont alors possibles : </span></p><ul><li><span>Correspondance (</span><em><span>match</span></em><span>)</span></li><li><span>Substitution (</span><em><span>mismatch</span></em><span>)</span></li><li><span>Indel (Insertion / Délétion)</span></li></ul><p><span>On peut établir un score d&#39;alignement où l&#39;on compte : une correspondance -&gt; 2 points ; Subsitution -&gt; -1 points ; Indel -2 points. Attention néanmoins, le score associé à une substitution ne va pas être le même si on compare deux séquences protéiques, il va dépendre des acides aminés qui sont substitués. Pour ça on a un tableau qu&#39;on appelle </span><em><span>matrice de substitution</span></em><span>.</span></p><p>&nbsp;</p><p><img src="https://upload.wikimedia.org/wikipedia/commons/0/02/BLOSUM62.png" style="filter:invert(1); width:900px;"/></p><p>&nbsp;</p><p><span>Les acides aminés sont remplacés &quot;préférentiellement&quot; par d&#39;autres. Il possèdent par exemple des propriétés physico-chimique proches. Certains sont plus conservés que d&#39;autres. Ils sont par exemple essentiels dans la structure 3D des protéines (comme Tryptophane/W/Trp).</span></p><h3><a name="alignement-global" class="md-header-anchor"></a><span>Alignement Global</span></h3><p><span>L&#39;alignement Global consiste à évaluer une ressemblance globale entre deux séquences dont on a la séquence de nucléotides ou d&#39;acides aminés via un score qui prend en compte des similarités et des pénalités. Le problème étant : Quel est l&#39;alignement de score maximal, c&#39;est à dire, quelle est l&#39;alignement qui fait correspondre le plus d&#39;éléments.</span></p><h3><a name="alignement-de-programmation-dynamique" class="md-header-anchor"></a><span>Alignement de programmation dynamique</span></h3><p><span>L&#39;idée est de mettre en abscisse et en ordonnée les deux séquences à comparer. On part toujours de 0 en haut à gauche puis on met le score dans la bonne case. Par exemple pour un </span><em><span>indel</span></em><span>, on met le score sur la première ligne et la première colonne. </span></p><p>&nbsp;</p><p><img src="https://slideplayer.fr/slide/12241792/72/images/24/Table+de+programmation+dynamique.jpg" width=500/></p></div>
+</body>
+</html>

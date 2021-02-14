@@ -1,0 +1,796 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>Chaines, chemins, cycles et circuits</title><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; --title-bar-height:20px; }
+.mac-os-11 { --title-bar-height:28px; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; tab-size: 4; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+  .CodeMirror-sizer { margin-left: 0px !important; }
+  .CodeMirror-gutters { display: none !important; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
+tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror-linenumber { user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-diagram-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li blockquote { margin: 1rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  .typora-export #write { break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+.MathJax_ref { fill: currentcolor; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.8; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.md-inline-math .MathJax_SVG .noError { display: none !important; }
+.html-for-mac .inline-math-svg .MathJax_SVG { vertical-align: 0.2px; }
+.md-math-block .MathJax_SVG_Display { text-align: center; margin: 0px; position: relative; text-indent: 0px; max-width: none; max-height: none; min-height: 0px; min-width: 100%; width: auto; overflow-y: hidden; display: block !important; }
+.MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
+.MathJax_SVG .MJX-monospace { font-family: var(--monospace); }
+.MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
+.MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; zoom: 90%; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; overflow-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; }
+.MathJax_SVG * { transition: none 0s ease 0s; }
+.MathJax_SVG_Display svg { vertical-align: middle !important; margin-bottom: 0px !important; margin-top: 0px !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+mark .md-meta { color: rgb(0, 0, 0); opacity: 0.3 !important; }
+@media print {
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+.md-diagram-panel .messageText { stroke: none !important; }
+.md-diagram-panel .start-state { fill: var(--node-fill); }
+.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
+.md-require-zoom-fix foreignobject { font-size: var(--mermaid-font-zoom); }
+
+
+
+
+.cm-s-inner .cm-variable {
+  color: #fff;
+}
+
+.cm-s-inner .cm-keyword,
+.cm-s-inner .cm-property {
+  color: #6699CC;
+}
+
+.cm-s-inner .cm-tag {
+  color: #EC5F67;
+}
+
+.CodeMirror div.CodeMirror-cursor {
+  border-left: 1px solid #b8bfc6;
+  z-index: 3;
+}
+
+.cm-s-inner .cm-string {
+  color: #99C794;
+}
+
+.cm-s-inner .cm-comment,
+.cm-s-inner.cm-comment {
+  color: #65737E;
+}
+
+.cm-s-inner .cm-header,
+.cm-s-inner .cm-def,
+.cm-s-inner.cm-header,
+.cm-s-inner.cm-def,
+.cm-s-inner .cm-attribute,
+.cm-s-inner .cm-operator {
+  color: #C594C5;
+}
+
+.cm-s-inner .cm-quote,
+.cm-s-inner.cm-quote {
+  color: #99C794;
+}
+
+.cm-s-inner .cm-hr {
+  color: #d8d5d5;
+}
+
+.cm-s-inner .cm-link {
+  color: #d3d3ef;
+}
+
+.cm-s-inner .cm-negative {
+  color: #EC5F67;
+}
+
+.cm-s-inner .cm-positive {
+  color: #99C794;
+}
+
+.cm-s-inner .cm-string-2 {
+  color: #EC5F67;
+}
+
+.cm-s-inner .cm-meta,
+.cm-s-inner .cm-qualifier {
+  color: #b7b3b3;
+}
+
+.cm-s-inner .cm-builtin {
+  color: #f3b3f8;
+}
+
+.cm-s-inner .cm-bracket {
+  color: #5FB3B3;
+}
+
+.cm-s-inner .cm-atom,
+.cm-s-inner.cm-atom {
+  color: #84B6CB;
+}
+
+.cm-s-inner .cm-number {
+  color: #F99157;
+}
+
+.cm-s-inner .cm-variable {
+  color: #b8bfc6;
+}
+
+.cm-s-inner .cm-variable-2 {
+  color: #9FBAD5;
+}
+
+.cm-s-inner .cm-variable-3 {
+  color: #1cc685;
+}
+
+.CodeMirror-selectedtext,
+.CodeMirror-selected {
+  background: #4a89dc;
+  color: #fff !important;
+  text-shadow: none;
+}
+
+.CodeMirror-gutters {
+  border-right: none;
+}@import '';
+
+:root {
+  --primary-color: #fcba03;
+  --primary-color-rgb: 252, 186, 3;
+
+  --bg-color: #292929;
+  --bg-color-dark: #1f1f1f;
+  --dark-trait: #141414;
+  --light-trait-100: #3d3d3d;
+  --light-trait-200: #545454;
+  --light-trait-300: #777;
+  --light-trait-400: #8c8c8c;
+
+  --mermaid-theme:dark;
+  
+  --text-color: #f8f8f2;
+  --text-color-secondary: #d2d3d3;
+  --text-highlight-color: #fff;
+  --text-highlight-bg: rgba(var(--primary-color-rgb), 0.3);
+  --select-text-bg-color: rgba(255, 255, 255, 0.2);
+  --search-select-text-color: var(--text-highlight-color);
+  --search-select-bg-color: var(--text-highlight-bg);
+
+  --code-color: #f3b3f8;
+
+  --border-radius: 3px;
+
+  --font-size: 14px;
+  --font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
+  --monospace: 'Fira Mono', 'Cousine', 'Consolas', monospace;
+
+  --heading-char-color: var(--light-trait-400);
+  --color-popover-bg-color: var(--text-color);
+  --rawblock-edit-panel-bd: var(--bg-color-dark);
+  --control-text-color: var(--text-color);
+  --meta-content-color: var(--primary-color);
+  --primary-btn-border-color: var(--primary-color);
+  --side-bar-bg-color: var(--bg-color-dark);
+  --item-hover-bg-color: var(--bg-color);
+  --active-file-bg-color: var(--bg-color);
+  --active-file-border-color: var(--bg-color);
+  --window-border: 1px solid var(--bg-color);
+  --focus-ring-color: transparent;
+}
+
+html {
+  font-size: var(--font-size);
+}
+
+body {
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+#write {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 30px;
+  padding-bottom: 100px;
+}
+
+@media only screen and (min-width: 1400px) {
+  #write {
+    max-width: 1024px;
+  }
+}
+
+@media only screen and (min-width: 1800px) {
+  #write {
+    max-width: 1200px;
+  }
+}
+
+#write > ul:first-child,
+#write > ol:first-child {
+  margin-top: 30px;
+}
+
+a {
+  color: var(--primary-color);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  position: relative;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  line-height: 1.4;
+  cursor: text;
+}
+
+h1:hover a.anchor,
+h2:hover a.anchor,
+h3:hover a.anchor,
+h4:hover a.anchor,
+h5:hover a.anchor,
+h6:hover a.anchor {
+  text-decoration: none;
+}
+
+h1 tt,
+h1 code,
+h2 tt,
+h2 code,
+h3 tt,
+h3 code,
+h4 tt,
+h4 code,
+h5 tt,
+h5 code,
+h6 tt,
+h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  padding-bottom: 0.3em;
+  font-size: 2.2em;
+  line-height: 1.3;
+  border-bottom: 1px solid var(--light-trait-100);
+}
+
+h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.75em;
+  line-height: 1.225;
+  border-bottom: 1px solid var(--light-trait-100);
+}
+
+h3 {
+  font-size: 1.4em;
+  line-height: 1.43;
+}
+
+h4 {
+  font-size: 1.2em;
+}
+
+h5 {
+  font-size: 1em;
+}
+
+h6 {
+  font-size: 1em;
+  color: var(--light-trait-300);
+}
+
+p,
+blockquote,
+ul,
+ol,
+dl,
+table {
+  margin: 0.8em 0;
+}
+
+li > ol,
+li > ul {
+  margin: 0 0;
+}
+
+hr {
+  height: 2px;
+  padding: 0;
+  margin: 16px 0;
+  background-color: var(--light-trait-100);
+  border: 0 none;
+  overflow: hidden;
+  box-sizing: content-box;
+}
+
+sup.md-footnote {
+  background-color: var(--light-trait-400);
+  color: var(--light-trait-100);
+}
+
+li p.first {
+  display: inline-block;
+}
+
+ul,
+ol {
+  padding-left: 30px;
+}
+
+ul:first-child,
+ol:first-child {
+  margin-top: 0;
+}
+
+ul:last-child,
+ol:last-child {
+  margin-bottom: 0;
+}
+
+mark,
+.ty-file-search-match-text,
+.md-search-hit {
+  background: var(--search-select-bg-color);
+  color: var(--search-select-text-color);
+}
+.md-search-hit * {
+  color: var(--search-select-text-color);
+}
+.cm-search-hit.CodeMirror-selectedtext,
+.md-search-hit.md-search-select,
+.md-search-select {
+  outline: 2px solid var(--primary-color);
+}
+.outline-item.select, .ty-search-item-line.select, .ty-search-item.select {
+  outline-width: 2px;
+}
+.outline-item.select {
+  outline-offset: 0px;
+}
+
+blockquote {
+  margin-left: -14px;
+  margin-right: -14px;
+  border-radius: var(--border-radius);
+  border-left: 4px solid var(--light-trait-300);
+  background-color: var(--light-trait-100);
+  padding: 7px 14px 7px 10px;
+}
+
+blockquote blockquote {
+  padding-right: 0;
+}
+
+table {
+  padding: 0;
+  word-break: initial;
+}
+
+table tr {
+  border-top: 1px solid var(--dark-trait);
+  margin: 0;
+  padding: 0;
+}
+
+table tr:nth-child(2n),
+thead {
+  background-color: var(--side-bar-bg-color);
+}
+
+table tr th {
+  font-weight: bold;
+  border: 1px solid var(--dark-trait);
+  border-bottom: 0;
+  margin: 0;
+  padding: 6px 13px;
+}
+
+table tr td {
+  border: 1px solid var(--dark-trait);
+  margin: 0;
+  padding: 6px 13px;
+}
+
+table tr th:first-child,
+table tr td:first-child {
+  margin-top: 0;
+}
+
+table tr th:last-child,
+table tr td:last-child {
+  margin-bottom: 0;
+}
+
+kbd {
+  font-size: 0.875rem;
+  background: var(--bg-color-dark);
+  border: 1px solid var(--dark-trait);
+  box-shadow: 0 2px 0 var(--dark-trait);
+  color: var(--text-color-secondary);
+}
+
+.md-fences,
+code,
+tt {
+  border: 1px solid var(--dark-trait);
+  background-color: var(--bg-color-dark);
+  border-radius: var(--border-radius);
+  padding: 2px 4px 0px 4px;
+  font-size: 0.9em;
+  font-family: var(--monospace);
+}
+
+.md-fences {
+  margin-bottom: 15px;
+  margin-top: 15px;
+  padding-top: 8px;
+  padding-bottom: 6px;
+  background-color: var(--side-bar-bg-color);
+}
+
+#write pre.md-meta-block {
+  padding: 1rem;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: var(--bg-color-dark);
+  border: 0;
+  border-radius: var(--border-radius);
+  color: var(--light-trait-400);
+  margin-top: 0 !important;
+}
+
+#write .mathjax-block .md-rawblock-tooltip {
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
+}
+
+#write .mathjax-block .md-math-container {
+  border-top-left-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+  border-bottom-left-radius: var(--border-radius);
+}
+
+#write .md-mathblock-panel .md-rawblock-control:first-of-type {
+  border-top-left-radius: var(--border-radius);
+}
+
+.md-mathjax-midline {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.md-inline-math script {
+  color: var(--code-color);
+}
+
+code {
+  padding: 0 2px 0 2px;
+}
+
+.CodeMirror-lines {
+  padding-left: 4px;
+}
+
+.code-tooltip {
+  box-shadow: none;
+  border-radius: var(--border-radius);
+}
+
+#write .code-tooltip {
+  bottom: initial;
+  top: 100%;
+  left: initial;
+  right: -1px;
+  background: var(--bg-color-dark);
+  border: 1px solid var(--dark-trait);
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-top: 0;
+  font-family: var(--monospace);
+}
+
+#write .md-mathblock-panel .code-tooltip {
+  right: 0;
+  border: none;
+}
+
+#write .md-task-list-item > input {
+  -webkit-appearance: initial;
+  display: block;
+  position: absolute;
+  border: 1px solid var(--light-trait-200);
+  border-radius: 50%;
+  margin-left: -1.8rem;
+  height: 1.2rem;
+  width: 1.2rem;
+  transition: background 0.3s;
+}
+
+#write .md-task-list-item > input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+#write .md-task-list-item > input[checked] {
+  background: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+
+#write .md-task-list-item > input[checked]::before {
+  content: '✓';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  color: var(--dark-trait);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.md-image > .md-meta {
+  border-radius: var(--border-radius);
+  padding: 2px 0px 0px 4px;
+  font-size: 0.9em;
+  color: inherit;
+}
+
+.md-toc {
+  margin-top: 20px;
+  padding-bottom: 20px;
+}
+
+/* Source mode */
+.CodeMirror.cm-s-typora-default *,
+.cm-s-typora-default * {
+  background: inherit;
+  color: var(--text-color);
+  font-family: var(--monospace);
+  font-size: var(--font-size) !important;
+  font-style: normal;
+  font-weight: normal;
+}
+.CodeMirror.cm-s-typora-default div.CodeMirror-cursor {
+  border-left: 2px solid var(--light-trait-400);
+}
+
+.sidebar-tabs {
+  border-bottom: none;
+}
+
+.outline-expander {
+  width: 1.5rem;
+  vertical-align: initial;
+}
+.outline-expander:before,
+.outline-expander:hover:before,
+.outline-item-open > .outline-item > .outline-expander:before,
+.outline-item-open > .outline-item > .outline-expander:hover:before {
+  content: "\f125";
+  transition: transform 125ms ease-in-out;
+}
+.outline-item-open > .outline-item > .outline-expander:hover:before,
+.outline-item-open > .outline-item > .outline-expander:before {
+  transform: rotate(90deg);
+}
+.outline-label:hover {
+  text-decoration: none;
+}
+
+#toc-dropmenu {
+  background: var(--bg-color-dark);
+}
+#toc-dropmenu .outline-title {
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+.dropdown-menu .divider {
+  display: none;
+}
+
+.context-menu {
+  background-color: var(--bg-color-dark);
+}
+
+.file-node-background {
+  height: 31px;
+}
+.file-node-content:hover .file-node-icon,
+.file-node-content:hover .file-node-open-state {
+  visibility: visible;
+}
+.file-node-icon {
+  margin-right: 8px;
+}
+.file-library-node:not(.file-node-root):focus>.file-node-content {
+  outline: none;
+}
+
+/* New file animation */
+.blink-area {
+  animation: none;
+}
+
+.file-list-item-summary {
+  font-size: var(--font-size);
+  font-family: var(--font-family);
+}
+
+#md-searchpanel input {
+  border-radius: var(--border-radius);
+  box-shadow: none;
+}
+#md-searchpanel input:focus {
+  box-shadow: none;
+  border-color: var(--meta-content-color);
+}
+#md-searchpanel .search-type-selection {
+  width: auto;
+}
+#md-searchpanel .btn:not(.close-btn):hover {
+  box-shadow: none;
+}
+
+.mac-seamless-mode #typora-sidebar {
+  background-color: var(--side-bar-bg-color);
+}
+
+#md-notification .btn {
+  border: 0;
+}
+
+
+
+</style>
+</head>
+<body class='typora-export'>
+<div id='write'  class=''><h1><a name="chaînes-chemins-cycles-et-circuits" class="md-header-anchor"></a><span>Chaînes, chemins, cycles et circuits</span></h1><p><span>Cette partie se concentre, comme la dernière, sur les notions importantes des graphes. On verra ici qu&#39;une chaîne, un chemin, un cycle et un circuit sont des thermes qui s&#39;emploient selon le type de graphe que l&#39;on utilise, orienté ou non-orienté. Ces notions ne sont pas simples a employé dans le sens où elles différent avec le type de graphes. Une chaîne ne désigne pas exactement la même chose dans un graphe orienté que dans un graphe non orienté. Il y a des chaînes et des cycles dans les graphes orientés et des circuits et des chemins dans les graphes non-orientés.</span></p><h2><a name="cas-dun-graphe-orienté" class="md-header-anchor"></a><span>Cas d&#39;un graphe Orienté</span></h2><ul><li><span>Un </span><strong><span>chemin</span></strong><span> est une suite de sommets </span><span class="MathJax_SVG" tabindex="-1" style="font-size: 100%; display: inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="9.802ex" height="1.743ex" viewBox="0 -518.7 4220.4 750.3" role="img" focusable="false" style="vertical-align: -0.538ex;"><defs><path stroke-width="0" id="E4-MJMATHI-76" d="M173 380Q173 405 154 405Q130 405 104 376T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Q21 294 29 316T53 368T97 419T160 441Q202 441 225 417T249 361Q249 344 246 335Q246 329 231 291T200 202T182 113Q182 86 187 69Q200 26 250 26Q287 26 319 60T369 139T398 222T409 277Q409 300 401 317T383 343T365 361T357 383Q357 405 376 424T417 443Q436 443 451 425T467 367Q467 340 455 284T418 159T347 40T241 -11Q177 -11 139 22Q102 54 102 117Q102 148 110 181T151 298Q173 362 173 380Z"></path><path stroke-width="0" id="E4-MJMAIN-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path stroke-width="0" id="E4-MJMAIN-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path stroke-width="0" id="E4-MJMAIN-2E" d="M78 60Q78 84 95 102T138 120Q162 120 180 104T199 61Q199 36 182 18T139 0T96 17T78 60Z"></path><path stroke-width="0" id="E4-MJMATHI-6E" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#E4-MJMATHI-76" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E4-MJMAIN-30" x="685" y="-213"></use><g transform="translate(938,0)"><use xlink:href="#E4-MJMATHI-76" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E4-MJMAIN-31" x="685" y="-213"></use></g><use xlink:href="#E4-MJMAIN-2E" x="1877" y="0"></use><use xlink:href="#E4-MJMAIN-2E" x="2321" y="0"></use><use xlink:href="#E4-MJMAIN-2E" x="2766" y="0"></use><g transform="translate(3211,0)"><use xlink:href="#E4-MJMATHI-76" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E4-MJMATHI-6E" x="685" y="-213"></use></g></g></svg></span><script type="math/tex">v_0 v_1...v_n</script><span> telle que chaque couple de sommets successifs est sur un arc. La </span><strong><span>longueur</span></strong><span> du chemin est n.</span></li><li><span>Une </span><strong><span>chaîne</span></strong><span> est une suite de sommets </span><span class="MathJax_SVG" tabindex="-1" style="font-size: 100%; display: inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="9.802ex" height="1.743ex" viewBox="0 -518.7 4220.4 750.3" role="img" focusable="false" style="vertical-align: -0.538ex;"><defs><path stroke-width="0" id="E4-MJMATHI-76" d="M173 380Q173 405 154 405Q130 405 104 376T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Q21 294 29 316T53 368T97 419T160 441Q202 441 225 417T249 361Q249 344 246 335Q246 329 231 291T200 202T182 113Q182 86 187 69Q200 26 250 26Q287 26 319 60T369 139T398 222T409 277Q409 300 401 317T383 343T365 361T357 383Q357 405 376 424T417 443Q436 443 451 425T467 367Q467 340 455 284T418 159T347 40T241 -11Q177 -11 139 22Q102 54 102 117Q102 148 110 181T151 298Q173 362 173 380Z"></path><path stroke-width="0" id="E4-MJMAIN-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path stroke-width="0" id="E4-MJMAIN-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path stroke-width="0" id="E4-MJMAIN-2E" d="M78 60Q78 84 95 102T138 120Q162 120 180 104T199 61Q199 36 182 18T139 0T96 17T78 60Z"></path><path stroke-width="0" id="E4-MJMATHI-6E" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#E4-MJMATHI-76" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E4-MJMAIN-30" x="685" y="-213"></use><g transform="translate(938,0)"><use xlink:href="#E4-MJMATHI-76" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E4-MJMAIN-31" x="685" y="-213"></use></g><use xlink:href="#E4-MJMAIN-2E" x="1877" y="0"></use><use xlink:href="#E4-MJMAIN-2E" x="2321" y="0"></use><use xlink:href="#E4-MJMAIN-2E" x="2766" y="0"></use><g transform="translate(3211,0)"><use xlink:href="#E4-MJMATHI-76" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E4-MJMATHI-6E" x="685" y="-213"></use></g></g></svg></span><script type="math/tex">v_0 v_1...v_n</script><span> telle que </span><span class="MathJax_SVG" tabindex="-1" style="font-size: 100%; display: inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="24.858ex" height="2.809ex" viewBox="0 -863.1 10702.7 1209.6" role="img" focusable="false" style="vertical-align: -0.805ex;"><defs><path stroke-width="0" id="E5-MJMAIN-2200" d="M0 673Q0 684 7 689T20 694Q32 694 38 680T82 567L126 451H430L473 566Q483 593 494 622T512 668T519 685Q524 694 538 694Q556 692 556 674Q556 670 426 329T293 -15Q288 -22 278 -22T263 -15Q260 -11 131 328T0 673ZM414 410Q414 411 278 411T142 410L278 55L414 410Z"></path><path stroke-width="0" id="E5-MJMAIN-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path stroke-width="0" id="E5-MJMAIN-2264" d="M674 636Q682 636 688 630T694 615T687 601Q686 600 417 472L151 346L399 228Q687 92 691 87Q694 81 694 76Q694 58 676 56H670L382 192Q92 329 90 331Q83 336 83 348Q84 359 96 365Q104 369 382 500T665 634Q669 636 674 636ZM84 -118Q84 -108 99 -98H678Q694 -104 694 -118Q694 -130 679 -138H98Q84 -131 84 -118Z"></path><path stroke-width="0" id="E5-MJMATHI-69" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path><path stroke-width="0" id="E5-MJMAIN-3C" d="M694 -11T694 -19T688 -33T678 -40Q671 -40 524 29T234 166L90 235Q83 240 83 250Q83 261 91 266Q664 540 678 540Q681 540 687 534T694 519T687 505Q686 504 417 376L151 250L417 124Q686 -4 687 -5Q694 -11 694 -19Z"></path><path stroke-width="0" id="E5-MJMATHI-6E" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path><path stroke-width="0" id="E5-MJMAIN-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path><path stroke-width="0" id="E5-MJMATHI-76" d="M173 380Q173 405 154 405Q130 405 104 376T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Q21 294 29 316T53 368T97 419T160 441Q202 441 225 417T249 361Q249 344 246 335Q246 329 231 291T200 202T182 113Q182 86 187 69Q200 26 250 26Q287 26 319 60T369 139T398 222T409 277Q409 300 401 317T383 343T365 361T357 383Q357 405 376 424T417 443Q436 443 451 425T467 367Q467 340 455 284T418 159T347 40T241 -11Q177 -11 139 22Q102 54 102 117Q102 148 110 181T151 298Q173 362 173 380Z"></path><path stroke-width="0" id="E5-MJMAIN-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path stroke-width="0" id="E5-MJMAIN-2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path><path stroke-width="0" id="E5-MJMAIN-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path stroke-width="0" id="E5-MJMAIN-2208" d="M84 250Q84 372 166 450T360 539Q361 539 377 539T419 540T469 540H568Q583 532 583 520Q583 511 570 501L466 500Q355 499 329 494Q280 482 242 458T183 409T147 354T129 306T124 272V270H568Q583 262 583 250T568 230H124V228Q124 207 134 177T167 112T231 48T328 7Q355 1 466 0H570Q583 -10 583 -20Q583 -32 568 -40H471Q464 -40 446 -40T417 -41Q262 -41 172 45Q84 127 84 250Z"></path><path stroke-width="0" id="E5-MJMATHI-41" d="M208 74Q208 50 254 46Q272 46 272 35Q272 34 270 22Q267 8 264 4T251 0Q249 0 239 0T205 1T141 2Q70 2 50 0H42Q35 7 35 11Q37 38 48 46H62Q132 49 164 96Q170 102 345 401T523 704Q530 716 547 716H555H572Q578 707 578 706L606 383Q634 60 636 57Q641 46 701 46Q726 46 726 36Q726 34 723 22Q720 7 718 4T704 0Q701 0 690 0T651 1T578 2Q484 2 455 0H443Q437 6 437 9T439 27Q443 40 445 43L449 46H469Q523 49 533 63L521 213H283L249 155Q208 86 208 74ZM516 260Q516 271 504 416T490 562L463 519Q447 492 400 412L310 260L413 259Q516 259 516 260Z"></path><path stroke-width="0" id="E5-MJMAIN-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#E5-MJMAIN-2200" x="0" y="0"></use><use xlink:href="#E5-MJMAIN-30" x="833" y="0"></use><use xlink:href="#E5-MJMAIN-2264" x="1611" y="0"></use><use xlink:href="#E5-MJMATHI-69" x="2667" y="0"></use><use xlink:href="#E5-MJMAIN-3C" x="3290" y="0"></use><use xlink:href="#E5-MJMATHI-6E" x="4345" y="0"></use><use xlink:href="#E5-MJMAIN-28" x="4945" y="0"></use><g transform="translate(5334,0)"><use xlink:href="#E5-MJMATHI-76" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E5-MJMATHI-69" x="685" y="-213"></use></g><use xlink:href="#E5-MJMAIN-2C" x="6163" y="0"></use><g transform="translate(6608,0)"><use xlink:href="#E5-MJMATHI-76" x="0" y="0"></use><g transform="translate(485,-150)"><use transform="scale(0.707)" xlink:href="#E5-MJMATHI-69" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E5-MJMAIN-2B" x="345" y="0"></use><use transform="scale(0.707)" xlink:href="#E5-MJMAIN-31" x="1123" y="0"></use></g></g><use xlink:href="#E5-MJMAIN-2208" x="8618" y="0"></use><use xlink:href="#E5-MJMATHI-41" x="9563" y="0"></use><use xlink:href="#E5-MJMAIN-29" x="10313" y="0"></use></g></svg></span><script type="math/tex">\forall \;0 \leq i<n (v_i,v_{i+1} \in A)</script><span> ou </span><span class="MathJax_SVG" tabindex="-1" style="font-size: 100%; display: inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="13.371ex" height="2.809ex" viewBox="0 -863.1 5756.8 1209.6" role="img" focusable="false" style="vertical-align: -0.805ex;"><defs><path stroke-width="0" id="E6-MJMAIN-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path><path stroke-width="0" id="E6-MJMATHI-76" d="M173 380Q173 405 154 405Q130 405 104 376T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Q21 294 29 316T53 368T97 419T160 441Q202 441 225 417T249 361Q249 344 246 335Q246 329 231 291T200 202T182 113Q182 86 187 69Q200 26 250 26Q287 26 319 60T369 139T398 222T409 277Q409 300 401 317T383 343T365 361T357 383Q357 405 376 424T417 443Q436 443 451 425T467 367Q467 340 455 284T418 159T347 40T241 -11Q177 -11 139 22Q102 54 102 117Q102 148 110 181T151 298Q173 362 173 380Z"></path><path stroke-width="0" id="E6-MJMATHI-69" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path><path stroke-width="0" id="E6-MJMAIN-2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path><path stroke-width="0" id="E6-MJMAIN-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path stroke-width="0" id="E6-MJMAIN-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path stroke-width="0" id="E6-MJMAIN-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path><path stroke-width="0" id="E6-MJMAIN-2208" d="M84 250Q84 372 166 450T360 539Q361 539 377 539T419 540T469 540H568Q583 532 583 520Q583 511 570 501L466 500Q355 499 329 494Q280 482 242 458T183 409T147 354T129 306T124 272V270H568Q583 262 583 250T568 230H124V228Q124 207 134 177T167 112T231 48T328 7Q355 1 466 0H570Q583 -10 583 -20Q583 -32 568 -40H471Q464 -40 446 -40T417 -41Q262 -41 172 45Q84 127 84 250Z"></path><path stroke-width="0" id="E6-MJMATHI-41" d="M208 74Q208 50 254 46Q272 46 272 35Q272 34 270 22Q267 8 264 4T251 0Q249 0 239 0T205 1T141 2Q70 2 50 0H42Q35 7 35 11Q37 38 48 46H62Q132 49 164 96Q170 102 345 401T523 704Q530 716 547 716H555H572Q578 707 578 706L606 383Q634 60 636 57Q641 46 701 46Q726 46 726 36Q726 34 723 22Q720 7 718 4T704 0Q701 0 690 0T651 1T578 2Q484 2 455 0H443Q437 6 437 9T439 27Q443 40 445 43L449 46H469Q523 49 533 63L521 213H283L249 155Q208 86 208 74ZM516 260Q516 271 504 416T490 562L463 519Q447 492 400 412L310 260L413 259Q516 259 516 260Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#E6-MJMAIN-28" x="0" y="0"></use><g transform="translate(389,0)"><use xlink:href="#E6-MJMATHI-76" x="0" y="0"></use><g transform="translate(485,-150)"><use transform="scale(0.707)" xlink:href="#E6-MJMATHI-69" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E6-MJMAIN-2B" x="345" y="0"></use><use transform="scale(0.707)" xlink:href="#E6-MJMAIN-31" x="1123" y="0"></use></g></g><use xlink:href="#E6-MJMAIN-2C" x="2121" y="0"></use><g transform="translate(2566,0)"><use xlink:href="#E6-MJMATHI-76" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E6-MJMATHI-69" x="685" y="-213"></use></g><use xlink:href="#E6-MJMAIN-29" x="3395" y="0"></use><use xlink:href="#E6-MJMAIN-2208" x="4062" y="0"></use><use xlink:href="#E6-MJMATHI-41" x="5006" y="0"></use></g></svg></span><script type="math/tex">(v_{i+1},v_i) \in A</script><span>. Plus simplement, une chaîne dans un graphe orienté est un chemin dont on est pas obligé de respecté le sens des flèches. </span></li><li><span>un </span><strong><span>circuit</span></strong><span> est un chemin tel que </span><span class="MathJax_SVG" tabindex="-1" style="font-size: 100%; display: inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="7.621ex" height="1.743ex" viewBox="0 -518.7 3281.4 750.3" role="img" focusable="false" style="vertical-align: -0.538ex;"><defs><path stroke-width="0" id="E13-MJMATHI-76" d="M173 380Q173 405 154 405Q130 405 104 376T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Q21 294 29 316T53 368T97 419T160 441Q202 441 225 417T249 361Q249 344 246 335Q246 329 231 291T200 202T182 113Q182 86 187 69Q200 26 250 26Q287 26 319 60T369 139T398 222T409 277Q409 300 401 317T383 343T365 361T357 383Q357 405 376 424T417 443Q436 443 451 425T467 367Q467 340 455 284T418 159T347 40T241 -11Q177 -11 139 22Q102 54 102 117Q102 148 110 181T151 298Q173 362 173 380Z"></path><path stroke-width="0" id="E13-MJMAIN-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path stroke-width="0" id="E13-MJMAIN-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path stroke-width="0" id="E13-MJMATHI-6E" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#E13-MJMATHI-76" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E13-MJMAIN-30" x="685" y="-213"></use><use xlink:href="#E13-MJMAIN-3D" x="1216" y="0"></use><g transform="translate(2272,0)"><use xlink:href="#E13-MJMATHI-76" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E13-MJMATHI-6E" x="685" y="-213"></use></g></g></svg></span><script type="math/tex">v_0=v_n</script><span>.</span></li></ul><p><img src="data:image/png;base64,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" referrerpolicy="no-referrer" alt="img"></p><h2><a name="cas-dun-graphe-non-orienté" class="md-header-anchor"></a><span>Cas d&#39;un graphe non orienté</span></h2><ul><li><span>Une </span><strong><span>chaîne</span></strong><span> est une suite de sommets </span><span class="MathJax_SVG" tabindex="-1" style="font-size: 100%; display: inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="9.802ex" height="1.743ex" viewBox="0 -518.7 4220.4 750.3" role="img" focusable="false" style="vertical-align: -0.538ex;"><defs><path stroke-width="0" id="E8-MJMATHI-76" d="M173 380Q173 405 154 405Q130 405 104 376T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Q21 294 29 316T53 368T97 419T160 441Q202 441 225 417T249 361Q249 344 246 335Q246 329 231 291T200 202T182 113Q182 86 187 69Q200 26 250 26Q287 26 319 60T369 139T398 222T409 277Q409 300 401 317T383 343T365 361T357 383Q357 405 376 424T417 443Q436 443 451 425T467 367Q467 340 455 284T418 159T347 40T241 -11Q177 -11 139 22Q102 54 102 117Q102 148 110 181T151 298Q173 362 173 380Z"></path><path stroke-width="0" id="E8-MJMAIN-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path stroke-width="0" id="E8-MJMAIN-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path stroke-width="0" id="E8-MJMAIN-2E" d="M78 60Q78 84 95 102T138 120Q162 120 180 104T199 61Q199 36 182 18T139 0T96 17T78 60Z"></path><path stroke-width="0" id="E8-MJMATHI-6E" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#E8-MJMATHI-76" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E8-MJMAIN-30" x="685" y="-213"></use><g transform="translate(938,0)"><use xlink:href="#E8-MJMATHI-76" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E8-MJMAIN-31" x="685" y="-213"></use></g><use xlink:href="#E8-MJMAIN-2E" x="1877" y="0"></use><use xlink:href="#E8-MJMAIN-2E" x="2321" y="0"></use><use xlink:href="#E8-MJMAIN-2E" x="2766" y="0"></use><g transform="translate(3211,0)"><use xlink:href="#E8-MJMATHI-76" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E8-MJMATHI-6E" x="685" y="-213"></use></g></g></svg></span><script type="math/tex">v_0v_1...v_n</script><span> telle que chaque paire de sommets successifs </span><span class="MathJax_SVG" tabindex="-1" style="font-size: 100%; display: inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="5.95ex" height="1.876ex" viewBox="0 -518.7 2561.6 807.7" role="img" focusable="false" style="vertical-align: -0.671ex;"><defs><path stroke-width="0" id="E9-MJMATHI-76" d="M173 380Q173 405 154 405Q130 405 104 376T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Q21 294 29 316T53 368T97 419T160 441Q202 441 225 417T249 361Q249 344 246 335Q246 329 231 291T200 202T182 113Q182 86 187 69Q200 26 250 26Q287 26 319 60T369 139T398 222T409 277Q409 300 401 317T383 343T365 361T357 383Q357 405 376 424T417 443Q436 443 451 425T467 367Q467 340 455 284T418 159T347 40T241 -11Q177 -11 139 22Q102 54 102 117Q102 148 110 181T151 298Q173 362 173 380Z"></path><path stroke-width="0" id="E9-MJMATHI-69" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path><path stroke-width="0" id="E9-MJMAIN-2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path><path stroke-width="0" id="E9-MJMAIN-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#E9-MJMATHI-76" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E9-MJMATHI-69" x="685" y="-213"></use><g transform="translate(828,0)"><use xlink:href="#E9-MJMATHI-76" x="0" y="0"></use><g transform="translate(485,-150)"><use transform="scale(0.707)" xlink:href="#E9-MJMATHI-69" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E9-MJMAIN-2B" x="345" y="0"></use><use transform="scale(0.707)" xlink:href="#E9-MJMAIN-31" x="1123" y="0"></use></g></g></g></svg></span><script type="math/tex">v_iv_{i+1}</script><span> est soit un arc (</span><span class="MathJax_SVG" tabindex="-1" style="font-size: 100%; display: inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="6.853ex" height="2.809ex" viewBox="0 -863.1 2950.6 1209.6" role="img" focusable="false" style="vertical-align: -0.805ex;"><defs><path stroke-width="0" id="E10-MJMATHI-76" d="M173 380Q173 405 154 405Q130 405 104 376T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Q21 294 29 316T53 368T97 419T160 441Q202 441 225 417T249 361Q249 344 246 335Q246 329 231 291T200 202T182 113Q182 86 187 69Q200 26 250 26Q287 26 319 60T369 139T398 222T409 277Q409 300 401 317T383 343T365 361T357 383Q357 405 376 424T417 443Q436 443 451 425T467 367Q467 340 455 284T418 159T347 40T241 -11Q177 -11 139 22Q102 54 102 117Q102 148 110 181T151 298Q173 362 173 380Z"></path><path stroke-width="0" id="E10-MJMATHI-69" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path><path stroke-width="0" id="E10-MJMAIN-2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path><path stroke-width="0" id="E10-MJMAIN-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path stroke-width="0" id="E10-MJMAIN-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#E10-MJMATHI-76" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E10-MJMATHI-69" x="685" y="-213"></use><g transform="translate(828,0)"><use xlink:href="#E10-MJMATHI-76" x="0" y="0"></use><g transform="translate(485,-150)"><use transform="scale(0.707)" xlink:href="#E10-MJMATHI-69" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E10-MJMAIN-2B" x="345" y="0"></use><use transform="scale(0.707)" xlink:href="#E10-MJMAIN-31" x="1123" y="0"></use></g></g><use xlink:href="#E10-MJMAIN-29" x="2561" y="0"></use></g></svg></span><script type="math/tex">v_iv_{i+1})</script><span>, soit un arc (</span><span class="MathJax_SVG" tabindex="-1" style="font-size: 100%; display: inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="5.95ex" height="1.876ex" viewBox="0 -518.7 2561.6 807.7" role="img" focusable="false" style="vertical-align: -0.671ex;"><defs><path stroke-width="0" id="E11-MJMATHI-76" d="M173 380Q173 405 154 405Q130 405 104 376T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Q21 294 29 316T53 368T97 419T160 441Q202 441 225 417T249 361Q249 344 246 335Q246 329 231 291T200 202T182 113Q182 86 187 69Q200 26 250 26Q287 26 319 60T369 139T398 222T409 277Q409 300 401 317T383 343T365 361T357 383Q357 405 376 424T417 443Q436 443 451 425T467 367Q467 340 455 284T418 159T347 40T241 -11Q177 -11 139 22Q102 54 102 117Q102 148 110 181T151 298Q173 362 173 380Z"></path><path stroke-width="0" id="E11-MJMATHI-69" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path><path stroke-width="0" id="E11-MJMAIN-2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path><path stroke-width="0" id="E11-MJMAIN-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#E11-MJMATHI-76" x="0" y="0"></use><g transform="translate(485,-150)"><use transform="scale(0.707)" xlink:href="#E11-MJMATHI-69" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E11-MJMAIN-2B" x="345" y="0"></use><use transform="scale(0.707)" xlink:href="#E11-MJMAIN-31" x="1123" y="0"></use></g><g transform="translate(1732,0)"><use xlink:href="#E11-MJMATHI-76" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E11-MJMATHI-69" x="685" y="-213"></use></g></g></svg></span><script type="math/tex">v_{i+1}v_i</script><span>)</span></li><li><span>La </span><strong><span>longueur</span></strong><span> du chemin correspond à </span><span class="MathJax_SVG" tabindex="-1" style="font-size: 100%; display: inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.394ex" height="1.476ex" viewBox="0 -518.7 600 635.5" role="img" focusable="false" style="vertical-align: -0.271ex;"><defs><path stroke-width="0" id="E12-MJMATHI-6E" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#E12-MJMATHI-6E" x="0" y="0"></use></g></svg></span><script type="math/tex">n</script><span>.</span></li><li><span>Un </span><strong><span>cycle</span></strong><span> est une chaîne telle que </span><span class="MathJax_SVG" tabindex="-1" style="font-size: 100%; display: inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="7.621ex" height="1.743ex" viewBox="0 -518.7 3281.4 750.3" role="img" focusable="false" style="vertical-align: -0.538ex;"><defs><path stroke-width="0" id="E13-MJMATHI-76" d="M173 380Q173 405 154 405Q130 405 104 376T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Q21 294 29 316T53 368T97 419T160 441Q202 441 225 417T249 361Q249 344 246 335Q246 329 231 291T200 202T182 113Q182 86 187 69Q200 26 250 26Q287 26 319 60T369 139T398 222T409 277Q409 300 401 317T383 343T365 361T357 383Q357 405 376 424T417 443Q436 443 451 425T467 367Q467 340 455 284T418 159T347 40T241 -11Q177 -11 139 22Q102 54 102 117Q102 148 110 181T151 298Q173 362 173 380Z"></path><path stroke-width="0" id="E13-MJMAIN-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path stroke-width="0" id="E13-MJMAIN-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path stroke-width="0" id="E13-MJMATHI-6E" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#E13-MJMATHI-76" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E13-MJMAIN-30" x="685" y="-213"></use><use xlink:href="#E13-MJMAIN-3D" x="1216" y="0"></use><g transform="translate(2272,0)"><use xlink:href="#E13-MJMATHI-76" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E13-MJMATHI-6E" x="685" y="-213"></use></g></g></svg></span><script type="math/tex">v_0=v_n</script></li></ul><p>&nbsp;</p><h2><a name="connexités" class="md-header-anchor"></a><span>Connexités</span></h2><h3><a name="cas-orienté" class="md-header-anchor"></a><span>Cas orienté</span></h3><blockquote><p><span>Un graphe orienté est fortement connexe si et seulement si pour tout couple de sommets il existe un chemin entre ces deux sommets</span></p></blockquote><ul><li><span>Un graphe orienté </span><em><span>G</span></em><span> est </span><strong><span>connexe</span></strong><span> si et seulement si pour tout couple de sommets il existe une </span><strong><span>chaîne</span></strong><span> entre ces deux sommets. C&#39;est à dire qu&#39;on peut aller de A à C et de C à A par exemple.</span></li><li><span>Un graphe orienté est </span><strong><span>fortement connexe</span></strong><span> si et seulement si pour tout couple de sommets il existe un </span><strong><span>chemin</span></strong><span> entre ces deux sommets.</span></li></ul><p><span>De ces définitions on peut déduire (</span><strong><span>Lemme</span></strong><span>) que si </span><em><span>G</span></em><span> est fortement connexe, alors tout sommet appartient à au au moins un circuit.</span></p><h3><a name="cas-non-orienté" class="md-header-anchor"></a><span>Cas non-orienté</span></h3><blockquote><p><span>Un graphe orienté </span><em><span>G</span></em><span> est </span><strong><span>connexe</span></strong><span> si est seulement si pour tout couple de sommets il existe une </span><strong><span>chaîne</span></strong><span> entre ces deux sommets dans le graphe non orienté obtenu en supprimant l&#39;orientation des arcs de </span><em><span>G</span></em><span>.</span></p></blockquote></div>
+</body>
+</html>
