@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>TD.html</title>
+<meta http-equiv="Content-Type" content="application/xhtml+xml;charset=utf-8"/>
+<link rel="stylesheet" type="text/css" media="all" href="https://cdn.jsdelivr.net/npm/github-markdown-css/github-markdown.min.css"  />
+<link rel="stylesheet" type="text/css" media="all" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/github.min.css"  /><meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'><style> body { box-sizing: border-box; max-width: 740px; width: 100%; margin: 40px auto; padding: 0 10px; } </style><script id='MathJax-script' async src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'></script><script src='https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/highlight.min.js'></script><script>document.addEventListener('DOMContentLoaded', () => { document.body.classList.add('markdown-body'); document.querySelectorAll('pre[lang] > code').forEach((code) => { code.classList.add(code.parentElement.lang); }); document.querySelectorAll('pre > code').forEach((code) => { hljs.highlightBlock(code); }); });</script>
+</head>
+
+<body>
+
+<h1 id="td-1">TD 1</h1>
+<h3 id="exercice-1">Exercice 1</h3>
+<p>On considère ici <span class="math inline">\(\sigma\)</span> comme un langage. Il contient deux mots, a et b (car une lettre peut être un mot).</p>
+<p>On a <span class="math inline">\(\sigma = \sigma^1 {a,b}\)</span></p>
+<p><span class="math inline">\(\sigma^1\)</span>, <span class="math inline">\(\sigma^2\)</span> et <span class="math inline">\(\sigma^3\)</span> sont obtenu en concaténant les mots.</p>
+<p><span class="math inline">\(\sigma^2 = \sigma \sigma = {aa,ab,ba,bb}\)</span></p>
+<p><span class="math inline">\(\sigma^3 = \sigma \sigma \sigma = {aaa,aab, aba, abb, baa,bab,bba,bbb}\)</span></p>
+<p><span class="math inline">\(\sigma^n\)</span> correspond à tous les mots de n lettres.</p>
+<p><span class="math inline">\(\sigma^0\)</span> na vaut rien, il vaut donc le mot vide <span class="math inline">\(\epsilon\)</span>. <span class="math inline">\(\sigma^0 = { \epsilon }\)</span></p>
+<p><span class="math inline">\(\sigma^*\)</span> correspond à l’ensemble de tous les mots.</p>
+<p><span class="math inline">\(\sigma^* = \sigma^0 \cup \sigma^1 \sigma^2 \cup \:...\)</span></p>
+<h3 id="exercice-3">Exercice 3</h3>
+<ol type="1">
+<li>La concaténation du mot <span class="math inline">\(w_1\)</span> et <span class="math inline">\(w_2\)</span> vaut <span class="math inline">\(abccba\)</span></li>
+<li>L’associativité, c’est par exemple l’addition où <span class="math inline">\(3+(4+2) = (3+4)+2\)</span>. On a donc <span class="math inline">\((w1 w_2)w_3 = w_1(w_2 w_3)\)</span>. La concaténation est donc assiociative.</li>
+<li><span class="math inline">\(w_1 w_2=abccba\)</span> et <span class="math inline">\(w_2 w_1 = cbaabc\)</span> la concaténation n’est donc pas commutative car <span class="math inline">\(w_1 w_2 != w_2 w_1\)</span></li>
+<li>Avec <span class="math inline">\(w_1=a, w_2=aa\)</span></li>
+</ol>
+<h2 id="exercice-7">Exercice 7</h2>
+<p>Un Alphabet est composé d’un état de départ, d’un état final, de lettres et de transitions. <span class="math inline">\(A_1 = (\sigma,Q,q_0,F,T)\)</span></p>
+<ul>
+<li><span class="math inline">\(L_1 = {a,aa, ab, ac, aaa, aab, aac, aba, abb, abc, aca, ...\)</span></li>
+</ul>
+<p><span class="math inline">\(\sigma = {a,b,c} q_0 = 1\)</span></p>
+<ul>
+<li><span class="math inline">\(L_3\)</span> Ici on cherche à avoir au moins un a. la première idée qu’on puisse avoir est la suivante:</li>
+</ul>
+<p>Mais c’est un automate non déterministe car il peut très bien finir dans un</p>
+<ul>
+<li><p><span class="math inline">\(L_4\)</span> L’idée est de faire autant de faire b et c qu’il y a, s’il y a un a on passe dans l’état 2 puis pareil que dans l’état 1, tant qu’il y a un b ou un c on tourne en boucle jusqu’à la fin du mot. Il faut aussi prendre en compte <span class="math inline">\(\epsilon\)</span> donc on met l’état 1 en état final.</p></li>
+<li><span class="math inline">\(L_5\)</span>
+<ul>
+<li><span class="math inline">\(L_51\)</span> Ici on met abc en boucle sur l’état initiale et on met l’état initiale en état finale. L’idée est que quelque soit la lettre, tout est accepté.</li>
+<li><span class="math inline">\(L_52\)</span> Ici on ne change rien car l’automate ne prend rien, même pas <span class="math inline">\(\epsilon\)</span>.</li>
+<li><span class="math inline">\(L_53\)</span> Ici l’automate ne prend en compte que <span class="math inline">\(\epsilon\)</span>, on a simplement à mettre</li>
+</ul></li>
+<li><p><span class="math inline">\(L_6\)</span> Pour savoir si on a un nombre pair de a, on met une “boucle” de a entre l’état initiale et l’état 2 puis on met en état finale l’état iniale de façon à ce que si un a revient vers l’état finale, il y en ait déjà un qui soit partis de l’état 1. De cette façon, on sait que a est une multiple de 2 quand il revient à l’état initiale.</p></li>
+<li><p><span class="math inline">\(L_7\)</span> C’est un peut la même mécanique que <span class="math inline">\(L_6\)</span>, à la différence qu’on remplace les a pas des b et que l’état final soit l’état 2. De cette manière, si on est dans l’état 2, c’est forcément qu’on est sur un nombre impair.</p></li>
+<li><p><span class="math inline">\(L_8\)</span></p></li>
+<li><p><span class="math inline">\(L_6 \cnp L_7\)</span></p></li>
+<li><p><span class="math inline">\(L_9\)</span> Ici on prend un multiple de 41 mais la méthode est la même pour chaque multiple. L’idée est de faire 40 états qui on chacun une boucle avec <span class="math inline">\(b\)</span> et <span class="math inline">\(c\)</span> et donc la transition est <span class="math inline">\(a\)</span>. Une fois arriver à 40, on revient à l’état initiale qui est aussi l’état finale. On a donc : <span class="math inline">\(\sigma = {a,b,c} \:Q={q_0,q_1,...,q_40 \: q_0=q_0 \:F = {q_0}\)</span> $T = {i 0…40,(q_i,b,q_i)} $</p></li>
+</ul>
+<h3 id="exercice-8">Exercice 8</h3>
+<p>L’idée du problème, c’est qu’on a un fermier qui est d’un cîté d’une rivière, il a un bateau qio permet d’aller de l’autre côté de la rivière. Il a un loup une chèvre et une salade et il veux les amener de l’autre côté de la rive. Les deux contraintes sont : * Un seul parmis la salade, le loup et la chèvre peuvent être dans le bateau avec le fermier. * Si le loup et la chèvre sont ensemble, le loup mange la chèvre * Si la chèvre est avec la salade, elle mange la salade. Le problème est ici assez simple mais là où il est intéressant, c’est qu’il peut être résolu sans l’utilisation de l’homme. On peut résoudre ce poblème avec un automate.</p>
+<h4 id="construction-de-lautomate">Construction de l’automate</h4>
+<p>Pour faciliter on va dire que Chèvre = C ; Salade = S ; Loup = L. Les états correspondent aux endroits où se situe l’élèment, soit l’élèment est d’un côté de la rivière soit il est de l’autre. On a donc <span class="math inline">\(2 \times 2 \times 2 \times 2\)</span> états (en comptant le fermier) soit 16 états.</p>
+
+</body>
+</html>

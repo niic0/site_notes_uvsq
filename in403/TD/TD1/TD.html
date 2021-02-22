@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>TD.html</title>
+<meta http-equiv="Content-Type" content="application/xhtml+xml;charset=utf-8"/>
+<link rel="stylesheet" type="text/css" media="all" href="https://cdn.jsdelivr.net/npm/github-markdown-css/github-markdown.min.css"  />
+<link rel="stylesheet" type="text/css" media="all" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/github.min.css"  /><meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'><style> body { box-sizing: border-box; max-width: 740px; width: 100%; margin: 40px auto; padding: 0 10px; } </style><script id='MathJax-script' async src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'></script><script src='https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/highlight.min.js'></script><script>document.addEventListener('DOMContentLoaded', () => { document.body.classList.add('markdown-body'); document.querySelectorAll('pre[lang] > code').forEach((code) => { code.classList.add(code.parentElement.lang); }); document.querySelectorAll('pre > code').forEach((code) => { hljs.highlightBlock(code); }); });</script>
+</head>
+
+<body>
+
+<h1 id="td-1">TD 1</h1>
+<h3 id="exercice-1">Exercice 1</h3>
+<ol type="1">
+<li><p>L’idée est de mettre un 1 quand la liaison est dans le graphe. On connait ainsi les successeurs et les predecesseurs.</p></li>
+<li><p>Ici on calcule le degré entrant et sortant du graphe pour chaque éléments. L’idée c’est de compter le nombre de flèches qui vont sur l’élément (degré entrant) et les flèches qui viennent de élément (degré sortant).</p></li>
+</ol>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">s</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">2</th>
+<th style="text-align: center;">3</th>
+<th style="text-align: center;">4</th>
+<th style="text-align: center;">5</th>
+<th style="text-align: center;">6</th>
+<th style="text-align: center;">7</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(d^+(s)\)</span></td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(d^-(s)\)</span></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+</tr>
+</tbody>
+</table>
+<ol start="4" type="1">
+<li>Dans l’algorithme suivant on initialise toute les cases du tableau à 0. Ensuite on fait une double boucle ou on vient ajouter en abscisse le degré entrant et en ordonnée le degré sortant.</li>
+</ol>
+<pre><code>Pour i allant de 1 à n
+    d+[i] = 0; d-[i]=0
+fin pour
+
+Pour i allant de 1 à n
+    Pour j allant de 1 à n
+        d+[i] += MO [i,j]
+        d-[j] += MO [i,j]
+    fin pour
+fin pour</code></pre>
+<p>On obtient une difficulté en <span class="math inline">\(O(n^2)\)</span>.</p>
+<ol start="5" type="1">
+<li><p>Il n’est pas fortement connexe car n’importe quel sommet ne mène pas à n’importe quel autre sommet. Par exemple, 7 n’a pas de chemin pour aller à 1.</p></li>
+<li><p>1-&gt;3-&gt;6&gt;1</p></li>
+<li><p>Un chemin hamiltonien est un chemin qui passe par chaque sommet. On obtient avec le graphe : 3612754</p></li>
+<li>Le but est d’obtenir une matrice symétrique à partir de la matrice orienté actuelle. Par exemple si en MO[5,2] on a un 1, alors l’idée est de mettre en MO[2,5] un 1 aussi.</li>
+</ol>
+<pre><code>Pour i allant de 1 à n 
+    Pour j allant de i à n
+        MNO[i,j] = MO[i,j] ou MO[j,i]
+        MNO[j,i] = MNO[i,j]
+    fin pour
+fin pour</code></pre>
+<ol start="9" type="1">
+<li><table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">s</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">2</th>
+<th style="text-align: center;">3</th>
+<th style="text-align: center;">4</th>
+<th style="text-align: center;">5</th>
+<th style="text-align: center;">6</th>
+<th style="text-align: center;">7</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">(s)</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2</td>
+</tr>
+</tbody>
+</table></li>
+<li><p>Ce graphe n’est pas connexe,</p></li>
+<li></li>
+</ol>
+
+</body>
+</html>

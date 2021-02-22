@@ -1,0 +1,7 @@
+#+TITLE: TD 1 - Java
+
+* Découverte de BlueJ
+  1. a/ Il y a les classe people, Person, Database, Adress, Staff et Student.
+     b/ Database est relié à Person, Person est lié à People qui est relié à Address. La class Person contient la class Staff et Student.
+  2. a/ Il faut JDK pour compiler Java.
+  1.

@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=Entreprise
+comment0.text=\n\ La\ classe\ <code>Entreprise</code>\ repr\u00E9sente\ une\ entreprise.\n\ La\ seule\ fonctionnalit\u00E9\ de\ cette\ classe\ est\ d'embaucher\ des\ employ\u00E9s.\n\ \n\ @author\ St\u00E9phane\ Lopes\n\ @version\ jan.\ 2015\n
+comment1.params=nom
+comment1.target=Entreprise(java.lang.String)
+comment1.text=\n\ Initialise\ l'entreprise\ avec\ son\ nom.\n\ \n\ @param\ nom\ le\ nom\ de\ l'entreprise\n
+comment2.params=emp
+comment2.target=void\ embauche(Employe)
+comment2.text=\n\ L'entreprise\ embauche\ un\ nouvel\ employ\u00E9.\n\ \n\ @param\ \ emp\ l'employ\u00E9\ \u00E0\ embaucher\n
+numComments=3
