@@ -7,7 +7,7 @@ Un sous-graphe à 2 définitions : induit et couvrant.
 * **Induit** : tel que pour un graphe $G=(V,E)$, on a $V'\subseteq V$, $G[V']$ se lit G induit $V'$
 * **Couvrant** (partiel) : est un graphe $E' \subseteq \{[u,v]\in E : u\in V',v \in V' \}$
 
-L'ensemble des sommets est inclus dans l'ensemble de départ et les arêtes dans l'ensemble 
+L'ensemble des sommets est inclus dans l'ensemble de départ et les arêtes dans l'ensemble d'arrivé.
 
 ## Problème Eulérien
 

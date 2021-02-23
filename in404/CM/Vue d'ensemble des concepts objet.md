@@ -1,6 +1,6 @@
 # Vue d'ensemble des concepts objet
 
-Dans un système objet, les fonctions n'existe pas en tant que tel, on manipule des objet qui interagissent. L'idée est d'avoir des objets clairs "de la vrai vie" : des voitures, des étudiants, etc... Plus techniquement, un objet est formé de deux composants : 
+Dans un système objet, les fonctions n'existent pas en tant que telle, on manipule des objets qui interagissent entre eux. L'idée est d'avoir des objets clairs "de la vrai vie" : des voitures, des étudiants, etc... Plus techniquement, un objet est formé de deux composants : 
 
 * Son **état**, i.e. les valeurs prises par des variables le décrivant (propriétés)
 * Son **comportement**, i.e. les opérations qui lui sont applicables
@@ -31,13 +31,13 @@ Cercle2D c3 = new Cercle2D();
 
 ## Notion de *Message* 
 
-Pour envoyé une requête à un objet pour demander l'exécution d'une opération on créer un **message**. Un **message** contient trois composants : 
+Pour envoyé une requête à un objet pour demander l'exécution d'une opération on créer un ***message***. Un ***message*** contient trois composants : 
 
 - **l’objet auquel il est envoyé** (le destinataire du message),
 - le nom de l’opération à invoquer,
 - les paramètres effectifs.
 
-Par exemple pour déplacer un cercle en *Java*, on peut utiliser la méthode *translate* : `cercle1(cercle1.translate(1.0, 2.0))`. Le message *translate* est alors envoyé au centre du cercle `centre.translate(1.0, 2.0)`.
+Par exemple pour déplacer un cercle en *Java*, on peut utiliser la méthode *translate* : `cercle1(cercle1.translate(1.0, 2.0))`. Le message *translate* est alors envoyé au centre du cercle `centre.translate(1.0, 2.0)`. Un message permet de modifier un attribut de l'objet désigné.
 
 ## Type
 
