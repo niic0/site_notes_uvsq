@@ -31,22 +31,22 @@ Si la **e-value** est inférieur à $10^{-6}$, elle peut être interprétée com
 
 Ici on voit en rouge la séquence exacte de la protéine mis dans *Blast* (car cette protéine existe déjà dans *Blast*).
 
-<img src="../../../site/bi423/Screenshot_20210215_102613.png" alt="Screenshot_20210215_102613" style="zoom:50%;" />
+<img src="/home/nicof/Desktop/UVSQ/bi423/CM/Screenshot_20210215_102613.png" alt="Screenshot_20210215_102613" style="zoom: 67%;" />
 
 *Blast* fournie aussi un affichage plus descriptif : 
 
-<img src="../../../site/bi423/Screenshot_20210215_102708.png" alt="Screenshot_20210215_102708" style="zoom:50%;" />
+<img src="/home/nicof/Desktop/UVSQ/bi423/CM/Screenshot_20210215_102708.png" alt="Screenshot_20210215_102708" style="zoom:67%;" />
 
 Finalement, *Blast* nous dit quelle séquence de sa banque à le plus de correspondance avec notre protéine.
 
-<img src="../../../site/bi423/Screenshot_20210215_102814.png" alt="Screenshot_20210215_102814" style="zoom:50%;" />
+<img src="/home/nicof/Desktop/UVSQ/bi423/CM/Screenshot_20210215_102814.png" alt="Screenshot_20210215_102814" style="zoom:67%;" />
 
 ### *e-value*
 
-2 banques sont utilisés quand on calcul une *e-value* à partir de la banque "bio" et d'une banque aléatoire crée à partir de la banque bio qui va mélanger notre séquence. Cette banque aléatoire va servir à faire correspondre notre séquence à une banque "pourris" (traduit de l'anglais *junk data bank*). Si notre séquence correspond à une séquence de cette banque pourrie, plus que la vrai banque, alors la valeur n'a aucune signification, elle n'a pas de sens.
+2 banques sont utilisés quand on calcul une *e-value* à partir de la banque "bio" et d'une banque aléatoire crée à partir de la banque bio qui va mélanger notre séquence. Cette banque aléatoire va servir à faire correspondre notre séquence à une banque "pourrie" (traduit de l'anglais *junk data bank*). Si notre séquence correspond à une séquence de cette banque pourrie, plus que la vrai banque, alors la valeur n'a aucune signification.
 
 La *e-value* n'est pas une probabilité. Par exemple si notre *e-value* = 3, cela veux dire que je m'attend à trouver 3 fois, en moyenne, un alignement de score supérieur à **S** si je fais un *blast* entre ma séquence et une banque de "séquences aléatoires".
 
-Si la **e-value** est inférieur à $10^-6$, elle peut être interprétée comme suit : La probabilité d'obtenir un score de valeur supérieure à **S** entre ma séquence et une "séquence aléatoire" est égale à $10^-6$.
+Si la **e-value** est inférieur à $10^{-6}$, elle peut être interprétée comme suit : La probabilité d'obtenir un score de valeur supérieure à **S** entre ma séquence et une "séquence aléatoire" est égale à $10^{-6}$.
 
 <u>Plus la e-value est petite, meilleur est l'alignement.</u> 

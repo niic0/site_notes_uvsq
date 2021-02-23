@@ -1,5 +1,3 @@
-
-
 # L'antiquité
 
 ## De *Thalès* à *Ptolémée*
