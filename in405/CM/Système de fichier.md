@@ -1,12 +1,12 @@
 # Système de fichier
 
-L'idée d'un système de fichier est de pouvoir stocker des informations de façon **pérenne**, de manière **organisée** et **abstraite**. On aura alors besoin de stockage de grande quantité, de conserver ces fichiers et pourquoi pas d'avoir un accès simultané (via un serveur par exemple). 
+L'idée d'un système de fichier est de pouvoir stocker des informations de façon **pérenne**, **organisée** et **abstraite**. On aura alors besoin de stockage en grande quantité, de conserver ces fichiers et pourquoi pas d'y avoir un accès simultané (via un serveur par exemple). 
 
-Un système de fichier est une partie du système d'exploitation gérant les fichiers. Dans un système *UNIX* tout est fichier : Fichier, Répertoire,  Liens symboliques, Autres (FIFO, etc...).
+Un système de fichier est une partie du système d'exploitation gérant les fichiers. Dans un système *UNIX* tout est fichier : Fichier, Répertoire,  Liens symboliques, Autres (*FIFO*, etc...).
 
 Un fichier est une suite d'octets (binaire, ASCII, etc.) caractérisé par :
 
-*  un nom de fichier - label et extension (optionnel sous UNIX)
+*  un nom de fichier - label et extension (optionnel sous *UNIX*)
 
   ```shell
   $ cat fichier-test.txt
@@ -22,7 +22,7 @@ Un fichier est une suite d'octets (binaire, ASCII, etc.) caractérisé par :
 
 *  Méta-données – attributs, ex : créateur, permissions d’accès, etc.
 
-Pour communiquer avec le système, on fait des **appels système**. On cherchera donc à <u>créer</u>, <u>ouvrir</u>, <u>fermer</u> et <u>supprimer</u>, à <u>lire</u>, <u>écrire</u> et à <u>positionner</u> les fichiers. On n'utilise donc pas les librairies type `stdio.h`. Pour ouvrir un fichier par exemple, on  utilisera `open` et pas `fopen` .
+Pour communiquer avec le système, on fait des **appels système** ou on cherchera à <u>créer</u>, <u>ouvrir</u>, <u>fermer</u> et <u>supprimer</u>, à <u>lire</u>, <u>écrire</u> et à <u>positionner</u> les fichiers. On n'utilise donc pas les librairies type `stdio.h`. Pour ouvrir un fichier par exemple, on  utilisera `open` et pas `fopen` .
 
 ```C
 int open(const char *pathname, int flags);
@@ -64,44 +64,87 @@ void creatFile(const char *fname, const int size, const char *data) {
 
 ### Explication du code
 
-`open` prend un fichier (`fname` = *filename*) pour l'ouvrir. S'il n'existe pas, la fonction le créée. Le dernière argument de la fonction open `0666` correspond au mode d'ouverture du fichier. Ici, on l'ouvre en mode lecture/écriture. On écrit ensuite dans ce fichier avec `write` avec `O_CREAT`, `0666` permet au fichier d'être éditable et ouvrable pour tous le monde (*user*, *sudoers* (administrateur), etc...). On vérifie ensuite si le fichier a bien été ouvert (gestion d'erreur) : `stderror(errno)` permet d'afficher de quelle erreur il s'agit grâce au code erreur `errno`. En réalité, `stdrerror` transforme le code erreur `errno` (qui est un entier) en chaîne de caractère compréhensible (parce que si le terminal nous sort `code error : 42` c'est compliqué de savoir ce qui ne va pas). `stderr` permet d'inscrire dans le terminal l'erreur. Pareil, pour `size` on fait une gestion d'erreur.
+`open` prend un fichier (`fname` = *filename*) pour l'ouvrir. S'il n'existe pas, la fonction le créée. Le dernière argument de la fonction open `0666` correspond au mode d'ouverture du fichier. Ici, on l'ouvre en mode lecture/écriture. On écrit ensuite dans ce fichier avec `write` avec `O_CREAT`, `0666` permet au fichier d'être éditable et ouvrable pour tous le monde (*user*, *sudoers* (administrateur), etc...). On vérifie ensuite si le fichier a bien été ouvert (gestion d'erreur) : `stderror(errno)` permet d'afficher de quelle erreur il s'agit grâce au code erreur `errno`. En réalité, `stdrerror` transforme le code erreur `errno` (qui est un entier) en chaîne de caractère compréhensible par l'homme (parce que si le terminal nous sort `code error : 42` c'est compliqué de savoir ce qui ne va pas). `stderr` permet d'inscrire dans le terminal l'erreur. Pareil, pour `size` on fait une gestion d'erreur.
 
 ## Gestion de dossier
 
-La création d'un dossier ce fait dans UNIX par la fonction suivante, elle est aussi disponible en *shell* (c'est à dire qu'on peut entrer `$ mkdir nomDossier` dans le terminal est ça créera un dossier). Ici c'est pareil on cherche à créer, ouvrir, fermer supprimer mais aussi lire et positionner les dossiers.
+La création d'un dossier ce fait dans UNIX par la fonction suivante. On utilise en *shell* `$ mkdir` qui permet aussi de créer un dossier (*MAKe DIRectory*)). Ici c'est pareil on cherche à créer, ouvrir, fermer supprimer mais aussi lire et positionner les dossiers.
 
 ```c
-
+int creatDir(const char *dname,const int nbEmpyFiles, char ***dirFiles) {
+    int rc;
+    int i;
+    
+    rc = mkdir(dname, 0700);
+    if(rc) {			// Vérifie que le dossier est crée
+        fprintf(stderr, "ERR on dir creation %s\n", strerror(errno));
+        return 1;
+    }
+    
+    *dirFiles = malloc(nbEmptyFiles * sizeof(char **));		// Pointe et alloue les fichier du dossier 
+    if (nbEmptyFiles && !*dirFiles) {
+        fprintf(stderr, "ERR on dir file names allocation: %s\n",stderror(errno));
+        return 0;
+    }
+    
+    for (i=0 ; i < nbEmpty ; i++) {
+        char *fname;
+        int fd;
+        
+        fname = malloc(16 + strlen(dname));		// Allocation de la chaîne de caractère qui va servir de nom au dossier
+        if (!fname) {
+            fprintg(stderr, "ERR on file name allocation");
+            return 1;
+        }
+        snprintf(fname, 16 + strlen(dname), "%s/empty_XXXXXX", dname);	// XXXXXX = créer une fichier
+        fd = mkstemp(fname);	// Génère un nom de fichier temporaire, créer et ouvre le fichier, retourne la description pour
+        						// un fichier
+        if (fd ==-1) {
+            fprintf(stderr, "ERR on file name creation (%s): %s\n", fname, stderror(errno));
+            continue;
+        }
+        close(fd);				// On ferme le fichier
+        (*dirFiles)[i] = fname;
+    }
+    return 0;
+}
 ```
 
-Ici `mkdir` permet de créer un dossier, `opendir` ouvre un dossier, `closedire` ferme un dossier, `dirent` contient les informations sur le fichier, `telldir` permet de dire où on en est dans le dossier (), `seekdir` permet de se positionner dans un répertoire.
-
-### Créer un dossier
-
-```C
-
-```
-
-un pointeur de pointeur de pointeur permet de pointer sur une liste de chaînes de caractère. Toujours pareil pour la gestion d'erreur, si rc alors on retourne une erreur, si l'allocation n'a pas fonctionner, on fait pareil, on retourne une erreur avec `stderr`.
-
-Les 6X ont pour but de créer un fichier. 
-
-
+Dans les arguments de la fonction, on voit `char ***dirFiles`. Un pointeur de pointeur de pointeur permet de pointer sur une liste de chaînes de caractère. 
 
 ### Supprimer un dossier
 
-on lui donne le nom du dossier `dname`, l'idée est de libérer le tableau qu'on a crée 
+La suppression de dossier se fait par la fonction `deleteDir`. On utilise parfois en *shell* `$ rmdir`, la fonction l'utilise aussi ici.
 
+```c
+void deleteDir(const char *dname, const int nbEmptyFiles, char **dirFiles) {
+    int i;
+    
+    for (i = 0; i < nbEmptyFiles; ++i) {// Boucle pour effacer les fichiers du dossier
+        unlink(dirFiles[i]);			// Enlève le lient qu'avez un fichier à son repértoire
+        free(dirFiles[i]);				// Libère la mémoire du fichier.
+    }
+    
+    free(dirFiles);		// Libère la mémoire du fichier qui permet au dossier d'éxister 
+    rmdir(dname);		// Efface le dossier
+}
+```
 
+### *Mapping* du fichier
 
-### Mappiong du fichier
+Le mécanisme de projection en mémoire (*memory mapping*) d’un fichier ouvert permet à un ou plusieurs processus de gérer son contenu (complet ou seulement certaines zones) directement en mémoire, sans avoir besoin d’utiliser les appels système vus dans ce chapitre.
 
-On peut aussi considérer que notre fichier est une chaîne de caractère. 
+Le fichier projeté en mémoire peut être en usage exclusif ou partagé pour le processus à l’origine du *mapping*.
 
-Le mapping de fichier permet de représenter le contenu d'un fichier dans un tableau : 
+```c
+void *mmap(void *addr, size_t lenght, int prot, int flags, int fd, off_t offset);
+int munmap(void *addr, size_t lenght);
+```
+
+Le *mapping* de fichier permet de représenter le contenu d'un fichier dans un tableau : 
 
 * Programmation facilité
-* Performences améliorées
-* Cohérance à maintenait pluslourde (multi-accés)
-* Taille du gichier généré, multiple de la taille d'une page
+* Performances améliorées
+* Cohérence à maintenait plus lourde (multi-accès)
+* Taille du fichier généré, multiple de la taille d'une page
 
