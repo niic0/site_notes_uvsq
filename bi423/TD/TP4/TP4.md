@@ -2,7 +2,7 @@
 
 ### Exercice 1
 
-Ecrire un programme permettant à un utilisateur de saisir une séquence d'ADN et de la transformer en son « inverse complémentaire ». Le programme affichera la séquence inverse-complémentaire dans les sens 5’ --->3’.
+Écrire un programme permettant à un utilisateur de saisir une séquence d'ADN et de la transformer en son « inverse complémentaire ». Le programme affichera la séquence inverse-complémentaire dans les sens 5’ --->3’.
 Note : proposer deux solutions différentes à cet exercice !
 
 ```python

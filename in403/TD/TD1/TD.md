@@ -2,7 +2,7 @@
 
 ### Exercice 1
 
-1. L'idée est de mettre un 1 quand la liaison est dans le graphe. On connait ainsi les successeurs et les predecesseurs.
+1. L'idée est de mettre un 1 quand la liaison est dans le graphe. On connaît ainsi les successeurs et les prédécesseurs.
 
 3. Ici on calcule le degré entrant et sortant du graphe pour chaque éléments. L'idée c'est de compter le nombre de flèches qui vont sur l'élément (degré entrant) et les flèches qui viennent de élément (degré sortant).
 
