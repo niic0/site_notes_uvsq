@@ -116,6 +116,12 @@ public class Cercle2D implements Deplacable {
   - de la mémoire est allouée pour l’objet,
   - l’objet est initialisé (appel du constructeur) afin de respecter l’invariant de la classe.
 
+## Relation entre Classes
 
+On a trois types de relation entre classes:
 
- 
+* **Dépendance** : Liaison limité dans le temps entre objets (non structurelle). La relation de dépendance caractérise une dépendance dans une méthode, un peut à la manière des arguments d'une fonction en C.
+* **Association** : Relation structurelle (agrégation, composition...). Une association désigne une association entre classes. Cette relation est parfois essentiel pour chacune des classes en association fonctionne.
+* **Spécialisation / Généralisation** : Relation d'héritage ou de sous-typage (réalisation -> relation entre une classe et un type). Cette relation peut être ordonnée par rapport aux dépendances qu'elle génère.
+
+Plus on créer des liens entre classes, plus ces dépendances vont être difficile à gérer. Il est donc recommander d'éviter (sans pour autant bannir) les associations de façon à avoir quelque chose de plus modulable.

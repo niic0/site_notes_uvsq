@@ -138,7 +138,7 @@ Le fichier projeté en mémoire peut être en usage exclusif ou partagé pour le
 
 ```c
 void *mmap(void *addr, size_t lenght, int prot, int flags, int fd, off_t offset);
-int munmap(void *addr, size_t lenght);
+int munmap(void *addr, size_t lenght); 
 ```
 
 Le *mapping* de fichier permet de représenter le contenu d'un fichier dans un tableau : 
@@ -147,4 +147,79 @@ Le *mapping* de fichier permet de représenter le contenu d'un fichier dans un t
 * Performances améliorées
 * Cohérence à maintenait plus lourde (multi-accès)
 * Taille du fichier généré, multiple de la taille d'une page
+
+### Méta-données
+
+Une méta-donnée est un **attribut** d'un fichier. Il contient se qui caractérise un fichier. Il peut contenir les permissions (si on a accès en mode *sudoers* ou simplement *user* au fichier demandé), la taille du fichier, le périphérique, la date du dernier accès, etc... Ces éléments peuvent être appelés en shell ou même en C :
+
+```c
+int stat(const char *path, struct stat *buf);
+int fstat(int fd, struct stat *buf);
+int lstat(const char *path, struct stat *buf);
+```
+
+La structure `stat` est remplie lors de l'appel de l'appel de la fonction, et contient diverses méta-données, dont : 
+
+* Les permissions `st_mode`
+* Le nombre de liens matériels pointant sur l'inode `st_nlink`
+* L'ID de l'utilisateur `st_uid`
+* La taile `st_size`
+* La date de dernier accès `st_atime`
+
+#### Les permissions
+
+Il y a plusieurs permissions sur un fichier : l'écriture, la lecture et l'exécution. On peut changer ces données via `chmod()` par le shell et en C  on utilise `chmod()` et `fchmod`. A titre indicatif, `chmod` correspond à **Ch**ange **Mod**e. 
+
+Par exemple en C on peut utilisé cette fonction comme suit `chmod(path, 0760)`. Dans cette exemple on a
+
+* `path` correspond à notre chemin menant au fichier dont l'ont veux changer les permissions d'accès,
+* `0` qui indique que la suite est en octale (base 8),
+* `760` indique que l'utilisateur  peut lire, écrire et exécuter le fichier en question.
+
+### Les types de liens 
+
+Il existe deux types de lien, les liens symboliques et les liens matériels :
+
+* Un lien symbolique correspond à un fichier A qui pointe vers un autre fichier B. Si le fichier A est supprimé, alors le fichier B devient inexistant. 
+* Un lien matériel (parfois appelé lien physique) définit en réalité une multitude de lien. C'est à dire que contrairement au lien symbolique, un fichier est pointé par plusieurs entré de répertoire. On peut très bien, dans un lien matériel, copier les donnée d'un fichier puis supprimer ces données copier, les fichiers initiaux sont inchangés.
+
+<img src="/home/nicof/Desktop/UVSQ/in405/CM/Screenshot_2021-03-01 slides_cm_in405 pdf.png" alt="Screenshot_2021-03-01 slides_cm_in405 pdf" style="zoom:67%;" />
+
+### Inode
+
+L'idone est un bloc d'octet comportant le numéro de l'inode, les méta-données du fichier et les blocs de données du fichier.
+
+<img src="/home/nicof/Desktop/UVSQ/in405/CM/e.png" alt="e" style="zoom:67%;" />
+
+### Allocation de l'espace aux blocs
+
+#### Contiguë
+
+![azer](/home/nicof/Desktop/UVSQ/in405/CM/azer.png)
+
+Cela à pour avantage d'être simple à implémenter et d'avoir de bonnes performances et pour inconvénient de fragmenter l'espace. De plus, on doit connaître le taille du fichier avant de le stocker.
+
+#### Liste chaînée
+
+![fqds](/home/nicof/Desktop/UVSQ/in405/CM/fqds.png)
+
+Cette liste chaîné permet de ne pas perdre de place maispour avoir accès au bloc *n*, il faut lire les blocs précédent ce qui peut être plutôt long si le fichier est gros.
+
+#### *FAT*
+
+![zar](/home/nicof/Desktop/UVSQ/in405/CM/zar.png)
+
+C'est un structure plus utilisé aujourd'hui (d'où le *FAT32* ou le *FAT16*). La ***File Allocation Table*** est une liste chaînée via table en mémoire. On enlève donc l’inconvénient des liste chaînée mais la taille de la table augmente avec le nombre de blocs sur le disque.
+
+***
+
+### Incohérence du système de fichier
+
+Le système de fichiers peut présenter des incohérences si il tombe en panne lors d'une écriture de fichier :
+
+* Blocs libres présents plusieurs fois dans la liste,
+* Blocs manquants (ni utilisés, ni libres),
+* Blocs utilisés dans plusieurs fichiers.
+
+Par exemple, quand on retire une clef USB sans l’éjecter alors qu'elle est entrain d'être utilisée, on peut avoir des erreurs, voir péter la clef. La commande `fsck` permet de vérifier la cohérence du système de fichiers, mais ne garantit pas la préservation des données.
 

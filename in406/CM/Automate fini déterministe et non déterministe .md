@@ -53,7 +53,7 @@ Soit $\mathcal A = (\Sigma,Q,q_0,F,T)$ un AFN et soit $\mathcal A = (\Sigma',Q',
 * $Q' = 2^Q$ (Cahque élément de $Q'$ est un sous-ensembles de $Q$);
 * $q_0'= {q_0}$;
 * $\forall q' \in Q'$, si $\exist q \in q'$ tel que $q \in F$, alors $q' \in F'$;
-* $T'={(q_0, a, \cup_{q\in q'}n q' \in Q',a \in \Sigma'$
+* $T'=\{(q_0, a, \cup_{q\in q'}n q' \in Q',a \in \Sigma'$
 
 Alors $\mathcal A'$ est déterministe et $L(\mathcal A')=L(\mathcal A)$.
 
