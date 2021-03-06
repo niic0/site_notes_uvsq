@@ -58,13 +58,5 @@
 
 4. Les mots qui ont au moins un a.
 
-## Exercice 21
-
-1. 
-2. Il est déterministe. 
-3.  
-
-## Exercice 22
-
 
 
