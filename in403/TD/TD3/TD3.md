@@ -24,5 +24,5 @@
 ### Exercice 3
 
 1. Il faut qu'il n'y est pas de circuit car sinon, on se retrouve dans une impasse.
-2. L'algorithme L'algorithme 1 initialise les sommets avec la couleur blanche et met tout les sommets avec un pere égale à NULL. Ensuite, l'algorithme parcours tous les sommets avec l'algorithme 2. L'algorithme 2 met en Gris le sommet, cela correspond à sa phase de "traitement". On a 2 variables, *d* et  
+2. L'algorithme L'algorithme 1 initialise les sommets avec la couleur blanche et met tout les sommets avec un père égale à NULL. Ensuite, l'algorithme parcours tous les sommets avec l'algorithme 2. L'algorithme 2 met en Gris le sommet, cela correspond à sa phase de "traitement". On a 2 variables de temps, *d* et *f*  qui vont permettre de savoir à quel moment le sommet à été traité. Pour simplifier d = gris et f = noir. Noir correspondant au traitement finie du sommet. 
 

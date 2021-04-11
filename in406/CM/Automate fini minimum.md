@@ -57,7 +57,7 @@ Les croix rouge nouvellement ajoutées représente, comme les croix noir, les é
 
 > ### Définition
 >
-> Soit $(\mathcal A = \Sigma,Q,q_0,F,T)$ un AFD deux états **q** et **q'** sont *séparables** ou **distinguables**, si :
+> Soit $(\mathcal A = \Sigma,Q,q_0,F,T)$ un AFD deux états **q** et **q'** sont **séparables** ou **distinguables**, si :
 > $$
 > \exist w \in \Sigma^*, q w \in F \implies q' \cdot w \notin F
 > \\ Ou \\

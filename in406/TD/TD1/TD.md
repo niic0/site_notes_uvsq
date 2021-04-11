@@ -23,7 +23,7 @@ $\Sigma^* = \Sigma^0 \cup \Sigma^1 \Sigma^2 \cup \:...$
 ### Exercice 3
 
 1. La concaténation du mot $w_1$ et $w_2$ vaut $abccba$
-2. L'associativité, c'est par exemple l'addition où $3+(4+2) = (3+4)+2$. On a donc $(w1 w_2)w_3 = w_1(w_2 w_3)$. La concaténation est donc associative.
+2. L'associativité, c'est par exemple l'addition où $3+(4+2) = (3+4)+2$. On a donc $(w_1 w_2)w_3 = w_1(w_2 w_3)$. La concaténation est donc associative.
 3. $w_1 w_2=abccba$ et $w_2 w_1 = cbaabc$ la concaténation n'est donc pas commutative car $w_1 w_2 != w_2 w_1$ 
 4. Avec $w_1=a, w_2=aa$
 
@@ -52,8 +52,9 @@ Un Alphabet est composé d'un état de départ, d'un état final, de lettres et 
 
 * $L_6 \cnp L_7$
 
-* $L_9$ Ici on prend un multiple de 41 mais la méthode est la même pour chaque multiple. L'idée est de faire 40 états qui on chacun une boucle avec $b$ et $c$ et donc la transition est $a$. Une fois arriver à 40, on revient à l'état initiale qui est aussi l'état finale. On a donc : $\Sigma = {a,b,c} \:Q={q_0,q_1,...,q_40 \: q_0=q_0 \:F = {q_0}$
-  $T = {\forall i \in 0...40,(q_i,b,q_i)} \cup $
+* $L_9$ Ici on prend un multiple de 41 mais la méthode est la même pour chaque multiple. L'idée est de faire 40 états qui on chacun une boucle avec $b$ et $c$ et donc la transition est $a$. Une fois arriver à 40, on revient à l'état initiale qui est aussi l'état finale. On a donc : $\Sigma = \{a,b,c} \:Q={q_0,q_1,...,q_40 : q_0=q_0 :F = \{q_0\}$
+  
+  $T = \{ \forall i \in 0...40,(q_i,b,q_i) \} \cup $
   
   
 ### Exercice 8

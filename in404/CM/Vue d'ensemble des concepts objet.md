@@ -125,3 +125,9 @@ On a trois types de relation entre classes:
 * **Spécialisation / Généralisation** : Relation d'héritage ou de sous-typage (réalisation -> relation entre une classe et un type). Cette relation peut être ordonnée par rapport aux dépendances qu'elle génère.
 
 Plus on créer des liens entre classes, plus ces dépendances vont être difficile à gérer. Il est donc recommander d'éviter (sans pour autant bannir) les associations de façon à avoir quelque chose de plus modulable.
+
+## Accés au membres
+
+Une classe peut contrôler l'accès ) ses membres (données ou fonctions):
+
+* Privé

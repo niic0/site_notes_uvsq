@@ -1,8 +1,6 @@
 # Automate fini non-déterministe et déterministe
 
-Soit l'automate qui reconnaît les mots se terminant par *ab* sur l'alphabet $\Sigma = \{a,b,c \}$ :
-
-![image-20210213210941074](../../../../../.config/Typora/typora-user-images/image-20210213210941074.png)
+Soit l'automate qui reconnaît les mots se terminant par *ab* sur l'alphabet $\Sigma = \{a,b,c \}$
 
 La reconnaissance du mot *acab* peut se fait avec la séquence d'états : $q_0,q_0,q_0,q_1,q_2$. On peut aussi prendre la séquence $q_0,q_0,q_0,q_0,q_0$ qui ne termine pas dans état final. Cet automate est **non déterministe** : pour le couple ($q_0,a$) il existe deux transitions différents : $(q_0,a,q_0)$ et $(q_0,a,q_1)$. Ce choix permet de dire que cette automate est no- déterministe.
 
@@ -59,9 +57,7 @@ Alors $\mathcal A'$ est déterministe et $L(\mathcal A')=L(\mathcal A)$.
 
 ## Automate fini déterministe complet
 
-Un automate déterministe complet désigne un automate qui aura le choix à chaque états entre toute les lettres du langages. Par exemple ici : 
-
-<img src="../../../site/in406/Screenshot_20210218_180057.png" alt="Screenshot_20210218_180057" style="zoom:80%;" />
+Un automate déterministe complet désigne un automate qui aura le choix à chaque états entre toute les lettres du langages. 
 
 ### Théorème
 

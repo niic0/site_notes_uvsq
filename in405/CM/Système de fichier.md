@@ -83,7 +83,7 @@ int creatDir(const char *dname,const int nbEmpyFiles, char ***dirFiles) {
     
     *dirFiles = malloc(nbEmptyFiles * sizeof(char **));		// Pointe et alloue les fichier du dossier 
     if (nbEmptyFiles && !*dirFiles) {
-        fprintf(stderr, "ERR on dir file names allocation: %s\n",stderror(errno));
+        fprintf(stderr, "ERR on dir file names allocation: %s\n",strerror(errno));
         return 0;
     }
     

@@ -125,3 +125,14 @@ if erreur == 0:
 else:
   print("Ce n'est pas un palindrome")
 ```
+
+### Exercice 5
+
+Exercice 5 -
+Ecrire un programme permettant à un utilisateur :
+- de saisir une séquence d’ADN,
+- et de vérifier s’il s’agit d’un palindrome « biologique » type épingle à cheveux.
+Exemple : l’utilisateur entre la chaine "TACGTA" et le programme affiche « il s’agit d‘un palindrome ».
+5’T A3’ AT
+CG
+
