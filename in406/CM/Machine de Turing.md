@@ -82,3 +82,19 @@ On peut définir $f_M$, la fonction partielle calculée par une machine de Turin
 Au lieu de reconnaître des langages, on calcule des fonctions comme en programmation et en algorithmique. 
 
 [Exemples de machine de Turing](https://turingmachinesimulator.com/). Ce site permet de créer des machine de Turing en voyant l’avancement avec un ruban. La prise en main est facile.
+
+### Autres modèles de calcul
+
+* Machine de Turing à plusieurs rubans
+* Machine de Turing non déterministe
+* Machine RAM ou de von Newmann (Assembbleur / processeur)
+* Pseudo-code (Programmation impérative)
+* Fonctions récursives (Programmation fonctionnelle)
+
+### Calculabilité
+
+La **calculabilité** est le domaine de l'informatique qui s'intéresse au pouvoir de calcul des différents modèles de calcul.
+
+> #### Conjecture (Thèse de Church)
+>
+> *Toute fonction calculable par un dispositif physique est calculable par une machine de Turing.*
