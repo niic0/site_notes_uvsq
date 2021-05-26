@@ -6,7 +6,11 @@ from graph import Vertex
 def main():
     G = Graph()
     G = createTier(G)
-
+    
+    if G.check_connected():
+        print("Graph is not connected - aborting")
+        exit()
+        
     print("\n[USAGE] :\nT1_i  0 < i <= 10\n"
           "T2_k  0 < k <= 20\n"
           "T3_n  0 < n <= 70\n")
@@ -19,19 +23,16 @@ def main():
         exit()
 
     # G.print()
+ 
+    predecessor, shortest_distance = G.dijkstra(vertexA)
+    path = shortest_path(predecessor, shortest_distance, vertexA, vertexB)
 
-    if G.check_connected():
-        predecessor, shortest_distance = G.dijkstra(vertexA)
-        path = shortest_path(predecessor, shortest_distance, vertexA, vertexB)
+    print_tables(predecessor, shortest_distance, G, all)
 
-        # print_tables(predecessor, shortest_distance, G, all)
-
-        if shortest_distance[vertexB] != 99999:
-            print('\nShortest distance is ' + str(shortest_distance[vertexB]))
-            print('And the path is ' + str(path))
-    else:
-        print("Graph is not connected - aborting")
-
+    if shortest_distance[vertexB] != 99999:
+        print('\nShortest distance is ' + str(shortest_distance[vertexB]))
+        print('And the path is ' + str(path))
+    
 
 """
 Create backbone

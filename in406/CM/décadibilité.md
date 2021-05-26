@@ -1,4 +1,4 @@
-# Décadibilité
+# Décidabilité
 
 ## Calculabilité
 
@@ -6,11 +6,11 @@ La calculabilité est le domaine de l'informatique qui s'intéresse au pouvoir d
 
 > ## Conjecture (Thèse de Church)
 >
-> *Toute donction calculatble par un dispositif physique est calculable par une machine de Turing.*
+> *Toute fonction calculable par un dispositif physique est calculable par une machine de Turing.*
 
 Cette conjecture est renforcée par l'expérience, les modèles suivants ont la même expressivité (Turing puissant):
 
-* toutes les variantes des machin,es de Turing
+* toutes les variantes des machines de Turing
 * le lambda calcul
 * les langage de programmation
 * les machines de Von neumann
@@ -26,7 +26,7 @@ On utilise les termes *langages* et *problème* de manière interchangeable. Le 
 
 1. Étant donné un problème, est -il décidable ?
 2. Existe-t-il un problème qui n'est pas décidable ?
-3. Peut on décider **eficacement** d'un problème ?
+3. Peut on décider **efficacement** d'un problème ?
 
 ## Compilation et pseudo-code
 

@@ -1,6 +1,6 @@
 # Algorithme de Ford-Bellman
 
-La méthode est assez proche dans sa forme générale de celle de Dijkstra. Mais la valeur d d’un sommet déjà traité pouvant être améliorée, il est nécessaire de revenir sur le traitement de ce sommet avec sa nouvelle valeur. Un sommet peut donc être traité plusieurs fois. Par ailleurs, on ne traite pas forcément le sommet ayant la valeur la plus petite (donc pas de recherche du sommet avec la plus petite valeur de $d$) mais un sommet quelconque dans la liste des sommets à traiter. Cette algorithme est notamment utilisé pour traiter des graphes avec des arcs à poids négatif.
+La méthode est assez proche dans sa forme générale de celle de Dijkstra. Mais la valeur d d’un sommet déjà traité pouvant être améliorée, il est nécessaire de revenir sur le traitement de ce sommet avec sa nouvelle valeur. Un sommet peut donc être traité plusieurs fois. Par ailleurs, on ne traite pas forcément le sommet ayant la valeur la plus petite (donc pas de recherche du sommet avec la plus petite valeur de $d$) mais un sommet quelconque dans la liste des sommets à traiter. Cet algorithme est notamment utilisé pour traiter des graphes avec des arcs à poids négatif.
 
 ### Algorithme
 

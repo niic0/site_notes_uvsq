@@ -25,6 +25,7 @@ graph.add_vertex(buf)
 graph.add_vertex(voisin)
 graph.add_vertex(voisin2)
 
+
 print("avant add edge")
 graph.print()
 

@@ -124,9 +124,9 @@ class Graph:
 
         for vertex in self.vertices:
             if vertex not in spanning_tree:
-                return False
+                return True
 
-        return True
+        return False
 
     """
     Simple implementation of Dijkstra algorithm
@@ -153,7 +153,7 @@ class Graph:
                     shortest_distance[childVertex] = weight + shortest_distance[minVertex]
                     predecessor[childVertex] = minVertex
             unseenVertices.pop(minVertex)
-        # print(shortest_distance)
+        #print(shortest_distance)
 
         return predecessor, shortest_distance
 

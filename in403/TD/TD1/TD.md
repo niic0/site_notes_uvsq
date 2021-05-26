@@ -57,4 +57,3 @@ fin pour
 
 2. Il existe au moins un graphe avec la séquence (0,0,1,3,3,3,4,4,5,5).
 
-
