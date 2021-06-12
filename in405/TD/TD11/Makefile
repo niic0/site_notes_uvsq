@@ -1,8 +1,8 @@
 all: compil
-	./pattern_finder 3 bite lorem.txt
+	./pattern-finder 3 lorem lorem.txt
 
 compil:
-	gcc -pthread main.c -Wall -o pattern_finder
+	gcc -pthread main.c -Wall -o pattern-finder
 
 clean:
 	rm pattern_finder
